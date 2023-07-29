@@ -51,7 +51,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:8.0.0'
     implementation 'com.google.android.gms:play-services-auth:20.4.1'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
-    implementation 'com.google.firebase:firebase-storage:20.1.0'
+    implementation 'com.google.firebase:firebase-storage:20.2.1'
 
     //lottie animation
     implementation "com.airbnb.android:lottie:4.2.1"
