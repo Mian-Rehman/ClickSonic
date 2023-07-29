@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context=".MenuFrag.AboutFragment">
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       >
+       <RelativeLayout
+           android:id="@+id/top_layout"
+           android:layout_width="match_parent"
+           android:layout_height="200dp"
+           android:layout_alignParentTop="true"
+           android:background="@color/main_color" />
+
+       <ImageView
+           android:layout_width="match_parent"
+           android:layout_height="180dp"
+           android:src="@drawable/about_infographics"
+           android:layout_alignParentTop="true"
+           android:layout_marginTop="20dp"
+           />
+
+
+       <RelativeLayout
+           android:id="@+id/rr_widgets"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/top_layout">
+
+           <ImageView
+               android:id="@+id/arrow_left"
+               android:layout_width="25dp"
+               android:layout_height="50dp"
+               android:layout_alignParentLeft="true"
+               android:layout_centerVertical="true"
+               android:src="@drawable/ic_kkeyboard_arrow_left" />
+
+           <ImageView
+               android:id="@+id/arrow_right"
+               android:layout_width="25dp"
+               android:layout_height="25dp"
+               android:layout_alignParentRight="true"
+               android:layout_centerVertical="true"
+               android:src="@drawable/ic_keyboard_arrow_right" />
+
+           <HorizontalScrollView
+               android:id="@+id/scroll_widgets"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_toLeftOf="@+id/arrow_right"
+               android:layout_toRightOf="@+id/arrow_left"
+               android:scrollbars="none">
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:padding="10dp">
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical">
+
+                       <androidx.cardview.widget.CardView
+                           android:layout_width="60dp"
+                           android:layout_height="60dp"
+                           android:elevation="10dp"
+                           app:cardCornerRadius="10dp"
+
+                           >
+
+                           <LinearLayout
+                               android:layout_width="match_parent"
+                               android:layout_height="match_parent"
+                               android:layout_gravity="center"
+                               android:background="@color/main_color"
+                               android:gravity="center"
+                               android:orientation="vertical"
+                               android:padding="10dp">
+
+                               <ImageView
+                                   android:layout_width="match_parent"
+                                   android:layout_height="match_parent"
+                                   android:padding="8dp"
+                                   android:src="@drawable/ic_facebook"
+                                   app:tint="@color/white" />
+
+                           </LinearLayout>
+                       </androidx.cardview.widget.CardView>
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="center"
+                           android:gravity="center"
+                           android:padding="4dp"
+                           android:text="Facebook"
+                           android:textColor="@color/black"
+                           android:textSize="12sp" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginLeft="10dp"
+                       android:orientation="vertical">
+
+                       <androidx.cardview.widget.CardView
+                           android:layout_width="60dp"
+                           android:layout_height="60dp"
+                           android:elevation="10dp"
+                           app:cardCornerRadius="10dp"
+
+                           >
+
+                           <LinearLayout
+                               android:layout_width="match_parent"
+                               android:layout_height="match_parent"
+                               android:layout_gravity="center"
+                               android:background="#FF5722"
+                               android:gravity="center"
+                               android:orientation="vertical"
+                               android:padding="10dp">
+
+                               <ImageView
+                                   android:layout_width="match_parent"
+                                   android:layout_height="match_parent"
+                                   android:padding="8dp"
+                                   android:src="@drawable/ic_instagram"
+                                   app:tint="@color/white" />
+
+                           </LinearLayout>
+                       </androidx.cardview.widget.CardView>
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="center"
+                           android:gravity="center"
+                           android:padding="4dp"
+                           android:text="Instagram"
+                           android:textColor="@color/black"
+                           android:textSize="12sp" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginLeft="10dp"
+                       android:orientation="vertical">
+
+                       <androidx.cardview.widget.CardView
+                           android:layout_width="60dp"
+                           android:layout_height="60dp"
+                           android:elevation="10dp"
+                           app:cardCornerRadius="10dp"
+
+                           >
+
+                           <LinearLayout
+                               android:layout_width="match_parent"
+                               android:layout_height="match_parent"
+                               android:layout_gravity="center"
+                               android:background="#00BCD4"
+                               android:gravity="center"
+                               android:orientation="vertical"
+                               android:padding="10dp">
+
+                               <ImageView
+                                   android:layout_width="match_parent"
+                                   android:layout_height="match_parent"
+                                   android:padding="8dp"
+                                   android:src="@drawable/ic_twitter"
+                                   app:tint="@color/white" />
+
+                           </LinearLayout>
+                       </androidx.cardview.widget.CardView>
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="center"
+                           android:gravity="center"
+                           android:padding="4dp"
+                           android:text="Twitter"
+                           android:textColor="@color/black"
+                           android:textSize="12sp" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginLeft="10dp"
+                       android:orientation="vertical">
+
+                       <androidx.cardview.widget.CardView
+                           android:layout_width="60dp"
+                           android:layout_height="60dp"
+                           android:elevation="10dp"
+                           app:cardCornerRadius="10dp"
+
+                           >
+
+                           <LinearLayout
+                               android:layout_width="match_parent"
+                               android:layout_height="match_parent"
+                               android:layout_gravity="center"
+                               android:background="@color/red"
+                               android:gravity="center"
+                               android:orientation="vertical"
+                               android:padding="10dp">
+
+                               <ImageView
+                                   android:layout_width="match_parent"
+                                   android:layout_height="match_parent"
+                                   android:padding="8dp"
+                                   android:src="@drawable/ic_pinterest"
+                                   app:tint="@color/white" />
+
+                           </LinearLayout>
+                       </androidx.cardview.widget.CardView>
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="center"
+                           android:gravity="center"
+                           android:padding="4dp"
+                           android:text="Pinterest"
+                           android:textColor="@color/black"
+                           android:textSize="12sp" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginLeft="10dp"
+                       android:orientation="vertical">
+
+                       <androidx.cardview.widget.CardView
+                           android:layout_width="60dp"
+                           android:layout_height="60dp"
+                           android:elevation="10dp"
+                           app:cardCornerRadius="10dp"
+
+                           >
+
+                           <LinearLayout
+                               android:layout_width="match_parent"
+                               android:layout_height="match_parent"
+                               android:layout_gravity="center"
+                               android:background="#3F51B5"
+                               android:gravity="center"
+                               android:orientation="vertical"
+                               android:padding="10dp">
+
+                               <ImageView
+                                   android:layout_width="match_parent"
+                                   android:layout_height="match_parent"
+                                   android:padding="8dp"
+                                   android:src="@drawable/ic_linkedin"
+                                   app:tint="@color/white" />
+
+                           </LinearLayout>
+                       </androidx.cardview.widget.CardView>
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="center"
+                           android:gravity="center"
+                           android:padding="4dp"
+                           android:text="Linkedin"
+                           android:textColor="@color/black"
+                           android:textSize="12sp" />
+
+                   </LinearLayout>
+
+               </LinearLayout>
+           </HorizontalScrollView>
+       </RelativeLayout>
+
+       <TextView
+           android:id="@+id/head_text"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="About Click Sonic"
+           android:textSize="22sp"
+           android:layout_below="@+id/rr_widgets"
+           android:padding="10dp"
+           android:textColor="@color/main_color"
+           android:textStyle="bold"
+           android:fontFamily="@font/jacques_francois"
+           />
+
+    <TextView
+        android:id="@+id/des_text_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_below="@+id/head_text"
+        android:padding="10dp"
+        android:text="@string/about_text_1"
+        />
+
+       <TextView
+           android:id="@+id/des_text_2"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:textSize="14sp"
+           android:textColor="@color/black"
+           android:layout_below="@+id/des_text_1"
+           android:padding="10dp"
+           android:text="@string/about_us_2"
+           />
+
+
+
+
+   </RelativeLayout>
+</ScrollView>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingTop="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/tabsList_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/buy_coins_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/buy_coins_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="8sp"
+                    android:textStyle="bold"
+                    android:text="Buy Coins"
+                    android:fontFamily="@font/jacques_francois"
+                    android:textColor="@color/main_color"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/buy_coins_view"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/main_color" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/points_tabs_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/buy_points_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/buy_points_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="8sp"
+                    android:text="Buy Points"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/jacques_francois"
+                    android:textColor="@color/gray"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/buy_points_view"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/gray" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

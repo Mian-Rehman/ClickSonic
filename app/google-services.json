@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "919344574720",
+    "project_id": "click-sonic-c4540",
+    "storage_bucket": "click-sonic-c4540.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919344574720:android:e68482e1380d1a9d6fc3e5",
+        "android_client_info": {
+          "package_name": "com.rehman.clicksonic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "919344574720-tpnevlv4c7a38kjkcbqf5l08jhf29h0a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rehman.clicksonic",
+            "certificate_hash": "fe055302636df7b112a14bbefc44c7754e218ece"
+          }
+        },
+        {
+          "client_id": "919344574720-k1tkf94tdbhgjc2gd7it51ckmnri5k17.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC26E4dAkLLDh23zY7T8TXff_5mNsPJ8z8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919344574720-k1tkf94tdbhgjc2gd7it51ckmnri5k17.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
