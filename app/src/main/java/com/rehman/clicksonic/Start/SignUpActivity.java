@@ -60,12 +60,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     ErrorTost errorTost = new ErrorTost(this);
     LoadingBar loadingBar = new LoadingBar(this);
-
     String fullName,email,password,conPassword,loginWith = "random",token,userUID,profileImageLink = ""
             ,notificationTime,notificationDate;
      int      coin = 0,points = 0,bonus = 0;
      boolean isGetNewAccountBonus;
-
     FirebaseAuth mAuth;
 
 
@@ -153,6 +151,7 @@ public class SignUpActivity extends AppCompatActivity {
                    pushNotification();
                }
             }
+
         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
