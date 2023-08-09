@@ -83,6 +83,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             Intent intent = new Intent(getActivity(), InformationActivity.class);
             intent.putExtra("name","Instagram");
+            intent.putExtra("type","Followers");
+            intent.putExtra("hint","Number of followers...");
             intent.putExtra("image",R.drawable.instagram);
             startActivity(intent);
 
@@ -91,6 +93,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             Intent intent = new Intent(getActivity(), InformationActivity.class);
             intent.putExtra("name","Facebook");
+            intent.putExtra("type","Followers");
+            intent.putExtra("hint","Number of followers...");
             intent.putExtra("image",R.drawable.facebook);
             startActivity(intent);
 
@@ -99,6 +103,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             Intent intent = new Intent(getActivity(), InformationActivity.class);
             intent.putExtra("name","TikTok");
+            intent.putExtra("type","Followers");
+            intent.putExtra("hint","Number of followers...");
             intent.putExtra("image",R.drawable.tiktok);
             startActivity(intent);
 
@@ -107,6 +113,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             Intent intent = new Intent(getActivity(), InformationActivity.class);
             intent.putExtra("name","YouTube");
+            intent.putExtra("type","Subscriber");
+            intent.putExtra("hint","Number of subscriber...");
             intent.putExtra("image",R.drawable.ic_youtube);
             startActivity(intent);
 
