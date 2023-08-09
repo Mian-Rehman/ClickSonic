@@ -62,6 +62,7 @@ import com.rehman.clicksonic.Utils.CustomNotification;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String CHANNEL_ID = "My Channel";
@@ -100,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
         initViews();
         checkBonus();
         drawer();
-
 
 
     }

@@ -13,6 +13,12 @@
         android:icon="@drawable/profile"
         />
 
+    <item
+        android:id="@+id/mm_orderHistory"
+        android:title="Order History"
+        android:icon="@drawable/history1"
+        />
+
 
     <item
         android:id="@+id/mm_about"

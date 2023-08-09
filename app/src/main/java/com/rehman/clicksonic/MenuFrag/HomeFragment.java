@@ -28,16 +28,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.rehman.clicksonic.Activity.BuyCoinActivity;
 import com.rehman.clicksonic.Activity.ConvertPointActivity;
 import com.rehman.clicksonic.Activity.DailyBonusActivity;
+import com.rehman.clicksonic.Activity.InformationActivity;
 import com.rehman.clicksonic.R;
 import com.rehman.clicksonic.Utils.LoadingBar;
+
 
 
 public class HomeFragment extends Fragment implements View.OnClickListener{
 
     TextView coins_text,points_text;
     LinearLayout ll_dailyOffer,ll_bonus,ll_scratch,ll_refresh;
-    CardView rate_card,wallet_card,invite_card,watchVideo_card,earnCoin_card,buySub_card
-                ,buyWatchTime_card,convertCoin_card,addLink_card;
+    CardView rate_card,wallet_card,invite_card,youtube_card,earnCoin_card,facebook_card
+                ,tiktok_card,convertCoin_card,instagram_card;
 
     Button btn_convertCoins,btn_buyCoin;
 
@@ -77,9 +79,42 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         initViews(view);
         clickLisnters(view);
+        instagram_card.setOnClickListener(v -> {
+
+            Intent intent = new Intent(getActivity(), InformationActivity.class);
+            intent.putExtra("name","Instagram");
+            intent.putExtra("image",R.drawable.instagram);
+            startActivity(intent);
+
+        });
+        facebook_card.setOnClickListener(v -> {
+
+            Intent intent = new Intent(getActivity(), InformationActivity.class);
+            intent.putExtra("name","Facebook");
+            intent.putExtra("image",R.drawable.facebook);
+            startActivity(intent);
+
+        });
+        tiktok_card.setOnClickListener(v -> {
+
+            Intent intent = new Intent(getActivity(), InformationActivity.class);
+            intent.putExtra("name","TikTok");
+            intent.putExtra("image",R.drawable.tiktok);
+            startActivity(intent);
+
+        });
+        youtube_card.setOnClickListener(v -> {
+
+            Intent intent = new Intent(getActivity(), InformationActivity.class);
+            intent.putExtra("name","YouTube");
+            intent.putExtra("image",R.drawable.ic_youtube);
+            startActivity(intent);
+
+        });
 
         return view;
     }
+
 
     private void clickLisnters(View view)
     {
@@ -131,12 +166,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         rate_card = view.findViewById(R.id.rate_card);
         wallet_card = view.findViewById(R.id.wallet_card);
         invite_card = view.findViewById(R.id.invite_card);
-        watchVideo_card = view.findViewById(R.id.watchVideo_card);
+        youtube_card = view.findViewById(R.id.youtube_card);
         earnCoin_card = view.findViewById(R.id.earnCoin_card);
-        buySub_card = view.findViewById(R.id.buySub_card);
-        buyWatchTime_card = view.findViewById(R.id.buyWatchTime_card);
-        convertCoin_card = view.findViewById(R.id.convertCoin_card);
-        addLink_card = view.findViewById(R.id.addLink_card);
+        facebook_card = view.findViewById(R.id.facebook_card);
+        tiktok_card = view.findViewById(R.id.tiktok_card);
+//        convertCoin_card = view.findViewById(R.id.convertCoin_card);
+        instagram_card = view.findViewById(R.id.instagram_card);
 
         btn_convertCoins = view.findViewById(R.id.btn_convertCoins);
         btn_buyCoin = view.findViewById(R.id.btn_buyCoin);
@@ -179,6 +214,5 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     }
                 });
     }
-
 
 }
