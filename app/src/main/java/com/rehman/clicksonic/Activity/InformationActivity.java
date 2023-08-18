@@ -339,15 +339,17 @@ public class InformationActivity extends AppCompatActivity {
         }
         if (radio_likes.isChecked()) {
 
-            int likesAmount = Integer.parseInt(likes);
-            int min = Integer.parseInt(minLike);
-            int max = Integer.parseInt(maxLike);
-
             if (likes.isEmpty()) {
                 loadingBar.HideDialog();
                 errorTost.showErrorMessage("Amount of likes required");
                 return false;
-            } else if (likesAmount < min || likesAmount > max) {
+            }
+
+            int likesAmount = Integer.parseInt(likes);
+            int min = Integer.parseInt(minLike);
+            int max = Integer.parseInt(maxLike);
+
+            if (likesAmount < min || likesAmount > max) {
                 loadingBar.HideDialog();
                 errorTost.showErrorMessage("Likes should be between " + min + " and " + max);
                 return false;
@@ -355,9 +357,6 @@ public class InformationActivity extends AppCompatActivity {
         }
         if (radio_followers.isChecked()) {
 
-            int followAmount = Integer.parseInt(followers);
-            int min = Integer.parseInt(minFollow);
-            int max = Integer.parseInt(maxFollow);
 
             if (followers.isEmpty()) {
                 loadingBar.HideDialog();
@@ -367,27 +366,45 @@ public class InformationActivity extends AppCompatActivity {
                     errorTost.showErrorMessage("Amount of followers required");
                 }
                 return false;
-            } else if (followAmount < min || followAmount > max) {
+            }
+
+            int followAmount = Integer.parseInt(followers);
+            int min = Integer.parseInt(minFollow);
+            int max = Integer.parseInt(maxFollow);
+
+            if (followAmount < min || followAmount > max) {
                 loadingBar.HideDialog();
                 errorTost.showErrorMessage("Followers should be between " + min + " and " + max);
                 return false;
             }
         }
+
         if (radio_views.isChecked()) {
-            int viewAmount = Integer.parseInt(views);
-            int min = Integer.parseInt(minFollow);
-            int max = Integer.parseInt(maxFollow);
 
             if (views.isEmpty()) {
                 loadingBar.HideDialog();
                 errorTost.showErrorMessage("Amount of Views required");
                 return false;
-            } else if (viewAmount < min || viewAmount > max) {
+            }
+
+            int viewAmount = Integer.parseInt(views);
+            int min = Integer.parseInt(minFollow);
+            int max = Integer.parseInt(maxFollow);
+
+            if (viewAmount < min || viewAmount > max) {
                 loadingBar.HideDialog();
                 errorTost.showErrorMessage("Followers should be between " + min + " and " + max);
                 return false;
             }
         }
+
+        if (!radio_views.isChecked() && !radio_likes.isChecked() && !radio_followers.isChecked()){
+            loadingBar.HideDialog();
+            errorTost.showErrorMessage("please select a category");
+            return false;
+        }
+
+
         usedCoins = multiplied;
         newCoins = coins1 - usedCoins;
 
