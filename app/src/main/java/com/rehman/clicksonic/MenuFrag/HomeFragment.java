@@ -85,6 +85,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             intent.putExtra("name","Instagram");
             intent.putExtra("type","Followers");
             intent.putExtra("hint","Number of followers...");
+
+            intent.putExtra("followers","3");
+            intent.putExtra("likes","0.5");
+            intent.putExtra("views","0.25");
+
+            intent.putExtra("maxFollow","3000");
+            intent.putExtra("minFollow","50");
+
+            intent.putExtra("maxLike","20000");
+            intent.putExtra("minLike","10");
+
+            intent.putExtra("maxView","100000");
+            intent.putExtra("minView","100");
             intent.putExtra("image",R.drawable.instagram);
             startActivity(intent);
 
@@ -95,6 +108,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             intent.putExtra("name","Facebook");
             intent.putExtra("type","Followers");
             intent.putExtra("hint","Number of followers...");
+
+            intent.putExtra("followers","3");
+            intent.putExtra("likes","10");
+            intent.putExtra("views","1");
+
+            intent.putExtra("maxFollow","3000");
+            intent.putExtra("minFollow","100");
+
+            intent.putExtra("maxLike","1000");
+            intent.putExtra("minLike","10");
+
+            intent.putExtra("maxView","10000");
+            intent.putExtra("minView","500");
+
             intent.putExtra("image",R.drawable.facebook);
             startActivity(intent);
 
@@ -105,6 +132,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             intent.putExtra("name","TikTok");
             intent.putExtra("type","Followers");
             intent.putExtra("hint","Number of followers...");
+
+            intent.putExtra("followers","10");
+            intent.putExtra("likes","1");
+            intent.putExtra("views","0.005");
+
+            intent.putExtra("maxFollow","10000");
+            intent.putExtra("minFollow","500");
+
+            intent.putExtra("maxLike","10000");
+            intent.putExtra("minLike","100");
+
+            intent.putExtra("maxView","1000000");
+            intent.putExtra("minView","100");
+
             intent.putExtra("image",R.drawable.tiktok);
             startActivity(intent);
 
@@ -115,6 +156,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             intent.putExtra("name","YouTube");
             intent.putExtra("type","Subscriber");
             intent.putExtra("hint","Number of subscriber...");
+
+            intent.putExtra("followers","10");
+            intent.putExtra("likes","3");
+            intent.putExtra("views","3");
+
+            intent.putExtra("maxFollow","1000");
+            intent.putExtra("minFollow","50");
+
+            intent.putExtra("maxLike","3000");
+            intent.putExtra("minLike","20");
+
+            intent.putExtra("maxView","5000");
+            intent.putExtra("minView","100");
+
             intent.putExtra("image",R.drawable.ic_youtube);
             startActivity(intent);
 
