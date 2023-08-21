@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Start.LoginActivity">
+
+    <ImageView
+        android:id="@+id/top_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/admin" />
+
+    <TextView
+        android:id="@+id/login_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_image"
+        android:fontFamily="@font/jacques_francois"
+        android:padding="10dp"
+        android:text="Admin Login"
+        android:textAlignment="center"
+        android:textColor="@color/main_color"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/ed_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_text"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edit_background"
+        android:drawableStart="@drawable/ic_email"
+        android:drawablePadding="20dp"
+        android:drawableTint="@color/main_color"
+        android:elevation="10dp"
+        android:hint="Enter your Email"
+        android:inputType="textEmailAddress"
+        android:padding="12dp"
+        android:textColor="@color/main_color"
+        android:textColorHint="@color/light_gray"
+        android:textSize="12sp" />
+
+    <EditText
+        android:id="@+id/ed_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ed_email"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edit_background"
+        android:drawableStart="@drawable/ic_lock"
+        android:drawableEnd="@drawable/ic_visibility_off"
+        android:drawablePadding="20dp"
+        android:drawableTint="@color/main_color"
+        android:elevation="10dp"
+        android:hint="Enter your password"
+        android:inputType="textPassword"
+        android:longClickable="false"
+        android:padding="12dp"
+        android:textColor="@color/main_color"
+        android:textColorHint="@color/light_gray"
+        android:textSize="12sp" />
+
+
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ed_password"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/jacques_francois"
+        android:text="Login Account"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+
+
+
+</RelativeLayout>

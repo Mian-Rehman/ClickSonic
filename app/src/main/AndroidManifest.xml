@@ -22,6 +22,15 @@
         android:theme="@style/Theme.ClickSonic"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.UserListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.AdminControlActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Start.AdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.InformationActivity"
             android:exported="false" />
         <activity

@@ -144,20 +144,19 @@
 
 
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/social_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/or_layout"
-        android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:gravity="center"
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/google_card"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_centerInParent="true"
             app:cardCornerRadius="10dp"
 
             >
@@ -182,8 +181,17 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:id="@+id/iv_admin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:text="Admin Login"
+            android:textColor="@color/main_color" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 

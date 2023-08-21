@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     EditText ed_email,ed_password;
-    TextView tv_forgot,account_text;
+    TextView tv_forgot,account_text,iv_admin;
     Button btn_login;
     CardView google_card;
     RelativeLayout rr_error;
@@ -141,6 +141,8 @@ public class LoginActivity extends AppCompatActivity {
             loadingBar.ShowDialog("please wait");
             signInGoogle();
         });
+
+        iv_admin.setOnClickListener(v -> { startActivity(new Intent(LoginActivity.this,AdminActivity.class));});
 
     }
 
@@ -228,6 +230,7 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.btn_login);
         account_text = findViewById(R.id.account_text);
         google_card = findViewById(R.id.google_card);
+        iv_admin = findViewById(R.id.iv_admin);
 
     }
 
