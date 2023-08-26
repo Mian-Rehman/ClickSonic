@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -39,7 +40,7 @@ public class InformationActivity extends AppCompatActivity {
     TextView tv_title, tv_total, coins_text,tv_maxmin;
     EditText ed_link, ed_followers, ed_likes, ed_views, ed_comments, ed_fullName;
     RadioButton radio_followers, radio_likes, radio_views, radio_comments;
-    String link, followers, likes, views, comments, fullName, name, type, hint,
+    String link, followers, likes, views, comments, fullName, name, type, hint,cost,
             coinLike, coinFollower, coinViews,maxFollow,minFollow,maxLike,minLike,maxView,minView;
     CurrentDateTime dateTime = new CurrentDateTime(this);
     ErrorTost errorTost = new ErrorTost(this);
@@ -97,6 +98,7 @@ public class InformationActivity extends AppCompatActivity {
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
                             String enteredText = s.toString();
                             calculateAndUpdateTotalCoins(enteredText);
+                            cost = String.valueOf(multipliedValue);
                         }
                         @Override
                         public void afterTextChanged(Editable s) {
@@ -123,6 +125,7 @@ public class InformationActivity extends AppCompatActivity {
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
                             String enteredText = s.toString();
                             calculateAndUpdateTotalCoins(enteredText);
+                            cost = String.valueOf(multipliedValue);
                         }
                         @Override
                         public void afterTextChanged(Editable s) {
@@ -160,6 +163,7 @@ public class InformationActivity extends AppCompatActivity {
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
                             String enteredText = s.toString();
                             calculateAndUpdateTotalCoins(enteredText);
+                            cost = String.valueOf(multipliedValue);
                         }
                         @Override
                         public void afterTextChanged(Editable s) {
@@ -189,10 +193,33 @@ public class InformationActivity extends AppCompatActivity {
                 views = ed_views.getText().toString();
             }
             if (isValid(link, followers, likes, views, comments, fullName , multipliedValue, coins)) {
-                saveFirebaseData();
+                //saveFirebaseData();
+                IntentData();
                 userData();
             }
         });
+    }
+
+    private void IntentData() {
+        Intent intent =new Intent(InformationActivity.this, ReceiptActivity.class);
+        intent.putExtra("link",link);
+        intent.putExtra("fullName",fullName);
+        intent.putExtra("title",name);
+        intent.putExtra("type",type);
+        if (radio_followers.isChecked()) {
+            intent.putExtra("followers", followers);
+        }
+        if (radio_likes.isChecked()) {
+            intent.putExtra("likes",likes);
+        }
+        if (radio_views.isChecked()) {
+            intent.putExtra("views",views);
+        }
+        intent.putExtra("cost",cost);
+        intent.putExtra("updatedCoins",String.valueOf(newCoins));
+
+        startActivity(intent);
+
     }
 
     private void calculateAndUpdateTotalCoins(String enteredText) {
@@ -219,8 +246,6 @@ public class InformationActivity extends AppCompatActivity {
         } else {
         }
     }
-
-
 
     private void userData() {
 
@@ -282,6 +307,7 @@ public class InformationActivity extends AppCompatActivity {
             map.put("views", views);
         }
         map.put("cost", multipliedValue);
+        map.put("updatedCoins", newCoins);
         map.put("OrderID", id);
         map.put("userUID", userUID);
         map.put("OrderDate", dateTime.getCurrentDate());
@@ -374,7 +400,12 @@ public class InformationActivity extends AppCompatActivity {
 
             if (followAmount < min || followAmount > max) {
                 loadingBar.HideDialog();
-                errorTost.showErrorMessage("Followers should be between " + min + " and " + max);
+                if (radio_followers.getText().equals("Subscriber")){
+                    errorTost.showErrorMessage("Subscriber should be between " + min + " and " + max);
+                }else{
+                    errorTost.showErrorMessage("Followers should be between " + min + " and " + max);
+                }
+
                 return false;
             }
         }
@@ -388,12 +419,12 @@ public class InformationActivity extends AppCompatActivity {
             }
 
             int viewAmount = Integer.parseInt(views);
-            int min = Integer.parseInt(minFollow);
-            int max = Integer.parseInt(maxFollow);
+            int min = Integer.parseInt(minView);
+            int max = Integer.parseInt(maxView);
 
             if (viewAmount < min || viewAmount > max) {
                 loadingBar.HideDialog();
-                errorTost.showErrorMessage("Followers should be between " + min + " and " + max);
+                errorTost.showErrorMessage("Views should be between " + min + " and " + max);
                 return false;
             }
         }
@@ -411,7 +442,7 @@ public class InformationActivity extends AppCompatActivity {
         if (newCoins < 0) {
             // User doesn't have enough coins to complete the transaction
             loadingBar.HideDialog();
-            Toast.makeText(InformationActivity.this, "Insufficient coins. You don't have enough coins to complete this transaction.", Toast.LENGTH_SHORT).show();
+            errorTost.showErrorMessage("Insufficient coins");
             return false;
         }
         /*if (radio_comments.isChecked()) {

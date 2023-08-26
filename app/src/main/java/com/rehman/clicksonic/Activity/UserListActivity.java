@@ -1,58 +1,109 @@
 package com.rehman.clicksonic.Activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.ktx.Firebase;
+import com.rehman.clicksonic.Adapter.AdapterUsers;
 import com.rehman.clicksonic.Model.UserModel;
 import com.rehman.clicksonic.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class UserListActivity extends AppCompatActivity {
-    EditText ed_username;
-    ImageButton img_search;
     ImageView back_image;
-    RecyclerView recycler_view;
-    String username;
+    TextView totalCount;
+    RecyclerView recyclerView;
+    AdapterUsers adapter;
+    ArrayList<UserModel> mDataList = new ArrayList<>();
+    String fullName,email;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
+
+        mAuth = FirebaseAuth.getInstance();
+
         intiView();
-
-        ed_username.requestFocus();
+        getIntentValues();
         back_image.setOnClickListener(v -> { onBackPressed(); });
-
-        img_search.setOnClickListener(v -> {
-            username = ed_username.getText().toString();
-            if(username.isEmpty()){
-                ed_username.setError("Invalid Username");
-                return;
-            }
-            SearchRecyclerView(username);
-        });
 
     }
 
-    private void SearchRecyclerView(String username) {
+    private void getIntentValues() {
 
+        Intent intent = getIntent();
+        fullName = intent.getStringExtra("name");
+        email = intent.getStringExtra("email");
+
+        getUserList();
+    }
+
+    private void getUserList() {
+        adapter = new AdapterUsers(this,mDataList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
+        FirebaseFirestore.getInstance().collection("Users")
+                .whereEqualTo("fullName",fullName)
+                .whereEqualTo("email",email)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error !=null) {
+                            Log.e("Firestore error", error.getMessage());
+                            return;
+                        }
+                        assert value != null;
+                        for (DocumentChange documentChange : value.getDocumentChanges())
+                        {
+                            if (documentChange.getType() == DocumentChange.Type.ADDED){
+                                mDataList.add(documentChange.getDocument().toObject(UserModel.class));
+                            }
+
+                        }
+                        adapter.notifyDataSetChanged();
+                        totalCount.setText(String.valueOf(mDataList.size()));
+                        if (mDataList.size() == 0)
+                        {
+
+                        }
+                    }
+                });
 
     }
 
     private void intiView() {
-        ed_username=findViewById(R.id.ed_username);
-
-        img_search=findViewById(R.id.img_search);
         back_image=findViewById(R.id.back_image);
 
-        recycler_view=findViewById(R.id.search_user_recycler_view);
+        totalCount=findViewById(R.id.totalCount);
+
+        recyclerView=findViewById(R.id.search_user_recycler_view);
     }
 }

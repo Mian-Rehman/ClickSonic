@@ -80,18 +80,16 @@ public class LoginActivity extends AppCompatActivity {
 
 
     EditText ed_email,ed_password;
-    TextView tv_forgot,account_text,iv_admin;
+    TextView tv_forgot,account_text,tv_admin;
     Button btn_login;
     CardView google_card;
     RelativeLayout rr_error;
-
     LoadingBar loadingBar;
     ErrorTost errorTost;
 
 
     FirebaseAuth mAuth;
     FirebaseUser user;
-
     String email,password,loginWith = "Google",token,userUID;
     boolean passwordVisible;
 
@@ -142,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
             signInGoogle();
         });
 
-        iv_admin.setOnClickListener(v -> { startActivity(new Intent(LoginActivity.this,AdminActivity.class));});
+        tv_admin.setOnClickListener(v -> { startActivity(new Intent(LoginActivity.this,AdminActivity.class));});
 
     }
 
@@ -230,7 +228,7 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.btn_login);
         account_text = findViewById(R.id.account_text);
         google_card = findViewById(R.id.google_card);
-        iv_admin = findViewById(R.id.iv_admin);
+        tv_admin = findViewById(R.id.tv_admin);
 
     }
 
