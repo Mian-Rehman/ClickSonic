@@ -51,28 +51,27 @@ public class UserListActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         intiView();
-        getIntentValues();
+        getUserList();
         back_image.setOnClickListener(v -> { onBackPressed(); });
 
     }
 
-    private void getIntentValues() {
-
-        Intent intent = getIntent();
-        fullName = intent.getStringExtra("name");
-        email = intent.getStringExtra("email");
-
-        getUserList();
-    }
+//    private void getIntentValues() {
+//
+//        Intent intent = getIntent();
+//        fullName = intent.getStringExtra("name");
+//        email = intent.getStringExtra("email");
+//
+//        getUserList();
+//    }
 
     private void getUserList() {
+
         adapter = new AdapterUsers(this,mDataList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        FirebaseFirestore.getInstance().collection("Users")
-                .whereEqualTo("fullName",fullName)
-                .whereEqualTo("email",email)
+        FirebaseFirestore.getInstance().collection("users")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -90,10 +89,7 @@ public class UserListActivity extends AppCompatActivity {
                         }
                         adapter.notifyDataSetChanged();
                         totalCount.setText(String.valueOf(mDataList.size()));
-                        if (mDataList.size() == 0)
-                        {
 
-                        }
                     }
                 });
 

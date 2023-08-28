@@ -1,9 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.DailyBonusActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/casino_background"
+        android:scaleType="centerCrop"
+        />
+
+
+
+    <com.bluehomestudio.luckywheel.LuckyWheel
+        android:id="@+id/lucky_wheel"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerInParent="true"
+        app:background_color="@color/main_color"
+        />
+
+    <ImageView
+        android:id="@+id/spin_Image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/spin_image"
+        android:padding="5dp"
+        android:visibility="visible"
+        />
+
+
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginBottom="-40dp"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/bottom_coins"
+        android:visibility="visible"
+        />
+
+
+
+
+
+
+
+</RelativeLayout>

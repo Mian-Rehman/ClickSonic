@@ -1,15 +1,20 @@
 package com.rehman.clicksonic.MenuFrag;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +26,14 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.InstallStateUpdatedListener;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.InstallStatus;
+import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -36,6 +49,7 @@ import com.rehman.clicksonic.Utils.LoadingBar;
 
 public class HomeFragment extends Fragment implements View.OnClickListener{
 
+    private static final int MY_REQUEST_CODE = 100;
     TextView coins_text,points_text;
     LinearLayout ll_dailyOffer,ll_bonus,ll_scratch,ll_refresh;
     CardView rate_card,wallet_card,invite_card,youtube_card,earnCoin_card,facebook_card
@@ -53,6 +67,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     int coins,points,bonus;
 
     LoadingBar loadingBar;
+    private AppUpdateManager appUpdateManager;
+    View view;
 
     @Override
     public void onStart() {
@@ -68,7 +84,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+         view = inflater.inflate(R.layout.fragment_home, container, false);
 
 
         loadingBar = new LoadingBar(getActivity());
@@ -79,6 +95,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         initViews(view);
         clickLisnters(view);
+        checkAppUpdate(view);
         instagram_card.setOnClickListener(v -> {
 
             Intent intent = new Intent(getActivity(), InformationActivity.class);
@@ -278,4 +295,73 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 });
     }
 
+    private void checkAppUpdate(View view)
+    {
+        appUpdateManager = AppUpdateManagerFactory.create(requireActivity());
+
+// Returns an intent object that you use to check for an update.
+        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+
+// Checks that the platform will allow the specified type of update.
+        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                    // This example applies an immediate update. To apply a flexible update
+                    // instead, pass in AppUpdateType.FLEXIBLE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                // Request the update.
+                try {
+                    appUpdateManager.startUpdateFlowForResult(
+                            // Pass the intent that is returned by 'getAppUpdateInfo()'.
+                            appUpdateInfo,
+                            // an activity result launcher registered via registerForActivityResult
+                            AppUpdateType.FLEXIBLE,
+                            // Or pass 'AppUpdateType.FLEXIBLE' to newBuilder() for
+                            // flexible updates.
+                            requireActivity(),
+                            MY_REQUEST_CODE);
+                } catch (IntentSender.SendIntentException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        // Before starting an update, register a listener for updates.
+        appUpdateManager.registerListener(listener);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (requestCode == MY_REQUEST_CODE)
+        {
+            if (resultCode != RESULT_OK)
+            {
+                Log.d("TAG", "onActivityResult: ");
+            }
+        }
+
+    }
+
+    InstallStateUpdatedListener listener = state -> {
+        if (state.installStatus() == InstallStatus.DOWNLOADED) {
+            // After the update is downloaded, show a notification
+            // and request user confirmation to restart the app.
+            popupSnackbarForCompleteUpdate();
+        }
+    };
+    // Displays the snackbar notification and call to action.
+    private void popupSnackbarForCompleteUpdate() {
+
+        Snackbar snackbar =
+                Snackbar.make(
+                        view.findViewById(android.R.id.content),
+                        "An update has just been downloaded.",
+                        Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction("RESTART", view -> appUpdateManager.completeUpdate());
+        snackbar.setActionTextColor(
+                getResources().getColor(android.R.color.holo_blue_bright));
+        snackbar.show();
+    }
 }
+

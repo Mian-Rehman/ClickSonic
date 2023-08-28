@@ -19,6 +19,8 @@
     <color name="gray">#878686</color>
     <color name="transparent">#0D2B2B2B</color>
     <color name="golden">#FF9800</color>
+    <color name="light_golden">#F1B256</color>
+    <color name="normal_golden">#F29D20</color>
 
 
 </resources>
