@@ -22,10 +22,25 @@
         android:theme="@style/Theme.ClickSonic"
         tools:targetApi="31">
         <activity
+            android:name=".Lists.TikTokActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Lists.FacebookListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Lists.InstagramListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SubActivity.CategorySelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Lists.YouTubeListActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.ReceiptActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.UserListActivity"
+            android:name=".Lists.UserListActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.AdminControlActivity"
@@ -70,11 +85,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8763323260658694~2802081368"/>
-
+            android:value="ca-app-pub-8763323260658694~2802081368" />
     </application>
 
 </manifest>

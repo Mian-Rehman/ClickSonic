@@ -15,7 +15,7 @@ import com.rehman.clicksonic.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.viewHolder>{
+public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.viewHolder> {
     Context context;
     ArrayList<UserModel> mUserList;
 
@@ -28,7 +28,7 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.viewHolder>{
     @Override
     public AdapterUsers.viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.user_recycle_row , parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.user_recycle_row, parent, false);
 
         return new viewHolder(view);
     }
@@ -39,6 +39,8 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.viewHolder>{
         UserModel model = mUserList.get(position);
         holder.tv_name.setText(model.getFullName());
         holder.tv_email.setText(model.getEmail());
+        holder.tv_coin.setText(String.valueOf(model.getCoin()));
+        holder.tv_point.setText(String.valueOf(model.getPoints()));
     }
 
     @Override
@@ -46,15 +48,17 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.viewHolder>{
         return mUserList.size();
     }
 
-    public static class viewHolder extends RecyclerView.ViewHolder{
+    public static class viewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_name,tv_email;
+        TextView tv_name, tv_email, tv_coin, tv_point;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tv_name=itemView.findViewById(R.id.tv_name);
-            tv_email=itemView.findViewById(R.id.tv_email);
+            tv_name = itemView.findViewById(R.id.tv_name);
+            tv_email = itemView.findViewById(R.id.tv_email);
+            tv_coin = itemView.findViewById(R.id.tv_coin);
+            tv_point = itemView.findViewById(R.id.tv_point);
 
         }
     }

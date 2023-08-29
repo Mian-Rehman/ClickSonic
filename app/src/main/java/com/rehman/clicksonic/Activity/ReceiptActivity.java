@@ -16,6 +16,7 @@ import com.rehman.clicksonic.R;
 import com.rehman.clicksonic.Utils.CurrentDateTime;
 import com.rehman.clicksonic.Utils.ErrorTost;
 import com.rehman.clicksonic.Utils.LoadingBar;
+import com.rehman.clicksonic.Utils.PaymentDialog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class ReceiptActivity extends AppCompatActivity {
     CurrentDateTime dateTime = new CurrentDateTime(this);
     ErrorTost errorTost = new ErrorTost(this);
     LoadingBar loadingBar = new LoadingBar(this);
+    PaymentDialog paymentDialog =new PaymentDialog(this);
 
     @Override
     protected void onStart() {
@@ -81,6 +83,7 @@ public class ReceiptActivity extends AppCompatActivity {
         map.put("updatedCoins", coinsLeft);
         map.put("OrderID", id);
         map.put("userUID", userUID);
+        map.put("Status", "pending");
         map.put("OrderDate", dateTime.getCurrentDate());
         map.put("OrderTime", dateTime.getTimeWithAmPm());
 
@@ -88,6 +91,7 @@ public class ReceiptActivity extends AppCompatActivity {
                 .set(map).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         loadingBar.HideDialog();
+                        paymentDialog.ShowDialog();
                         Toast.makeText(ReceiptActivity.this, "Your request has been sent for " + title, Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(e -> {

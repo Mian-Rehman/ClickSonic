@@ -1,77 +1,54 @@
-package com.rehman.clicksonic.Activity;
+package com.rehman.clicksonic.Lists;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Adapter;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.ktx.Firebase;
-import com.rehman.clicksonic.Adapter.AdapterUsers;
-import com.rehman.clicksonic.Model.UserModel;
+import com.rehman.clicksonic.Adapter.FacebookAdapter;
+import com.rehman.clicksonic.Adapter.InstagramAdapter;
+import com.rehman.clicksonic.Model.YouTubeModel;
 import com.rehman.clicksonic.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
+public class FacebookListActivity extends AppCompatActivity {
 
-public class UserListActivity extends AppCompatActivity {
     ImageView back_image;
     TextView totalCount;
     RecyclerView recyclerView;
-    AdapterUsers adapter;
-    ArrayList<UserModel> mDataList = new ArrayList<>();
-    String fullName,email;
+    FacebookAdapter adapter;
+    ArrayList<YouTubeModel> mDataList = new ArrayList<>();
     FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_list);
-
+        setContentView(R.layout.activity_facebook_list);
         mAuth = FirebaseAuth.getInstance();
 
         intiView();
-        getUserList();
+        getYouTubeList();
         back_image.setOnClickListener(v -> { onBackPressed(); });
-
     }
+    private void getYouTubeList() {
 
-//    private void getIntentValues() {
-//
-//        Intent intent = getIntent();
-//        fullName = intent.getStringExtra("name");
-//        email = intent.getStringExtra("email");
-//
-//        getUserList();
-//    }
-
-    private void getUserList() {
-
-        adapter = new AdapterUsers(this,mDataList);
+        adapter = new FacebookAdapter(this,mDataList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        FirebaseFirestore.getInstance().collection("users")
+        FirebaseFirestore.getInstance().collection("Facebook")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -83,7 +60,7 @@ public class UserListActivity extends AppCompatActivity {
                         for (DocumentChange documentChange : value.getDocumentChanges())
                         {
                             if (documentChange.getType() == DocumentChange.Type.ADDED){
-                                mDataList.add(documentChange.getDocument().toObject(UserModel.class));
+                                mDataList.add(documentChange.getDocument().toObject(YouTubeModel.class));
                             }
 
                         }
@@ -100,6 +77,7 @@ public class UserListActivity extends AppCompatActivity {
 
         totalCount=findViewById(R.id.totalCount);
 
-        recyclerView=findViewById(R.id.search_user_recycler_view);
+        recyclerView=findViewById(R.id.facebook_recycler_view);
+
     }
 }

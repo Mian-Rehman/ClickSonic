@@ -8,6 +8,13 @@
     tools:context=".Start.LoginActivity">
 
     <ImageView
+        android:id="@+id/back_image"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_arrow_back" />
+
+    <ImageView
         android:id="@+id/top_image"
         android:layout_width="200dp"
         android:layout_height="200dp"
