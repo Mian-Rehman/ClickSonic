@@ -10,6 +10,7 @@
 
     <color name="main_color">#254182</color>
     <color name="edit_color">#3265DA</color>
+    <color name="card_color">#4F84FF</color>
     <color name="second_color">#D80909</color>
     <color name="red">#D80909</color>
     <color name="background">#F1F1F1</color>

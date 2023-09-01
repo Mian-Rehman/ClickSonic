@@ -56,15 +56,6 @@ public class UserListActivity extends AppCompatActivity {
 
     }
 
-//    private void getIntentValues() {
-//
-//        Intent intent = getIntent();
-//        fullName = intent.getStringExtra("name");
-//        email = intent.getStringExtra("email");
-//
-//        getUserList();
-//    }
-
     private void getUserList() {
 
         adapter = new AdapterUsers(this,mDataList);
