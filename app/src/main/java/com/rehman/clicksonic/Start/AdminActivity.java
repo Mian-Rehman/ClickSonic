@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.rehman.clicksonic.Activity.AdminControlActivity;
 import com.rehman.clicksonic.R;
@@ -14,6 +15,7 @@ import com.rehman.clicksonic.Utils.LoadingBar;
 
 public class AdminActivity extends AppCompatActivity {
 
+    ImageView back_image;
     EditText ed_email, ed_password;
     String email, password, adminEmail, adminPassword;
     Button btn_login;
@@ -28,6 +30,8 @@ public class AdminActivity extends AppCompatActivity {
 
         loadingBar = new LoadingBar(this);
         errorTost = new ErrorTost(this);
+
+        back_image.setOnClickListener(v -> { onBackPressed(); });
 
         adminEmail = "admin";
         adminPassword = "admin";
@@ -75,6 +79,8 @@ public class AdminActivity extends AppCompatActivity {
         ed_email = findViewById(R.id.ed_email);
         ed_password = findViewById(R.id.ed_password);
         btn_login = findViewById(R.id.btn_login);
+
+        back_image = findViewById(R.id.back_image);
 
     }
 }

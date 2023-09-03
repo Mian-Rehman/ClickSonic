@@ -201,7 +201,7 @@
         android:padding="5dp">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_pending"
+            android:id="@+id/card_pendingAdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -222,13 +222,12 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="@color/main_color"
-                    android:padding="10dp"
                     />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_approved"
+            android:id="@+id/card_approvedAdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -248,13 +247,12 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="@color/main_color"
-                    android:padding="10dp"
                     />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_rejected"
+            android:id="@+id/card_rejectedAdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -274,7 +272,6 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="@color/main_color"
-                    android:padding="10dp"
                     />
             </LinearLayout>
         </androidx.cardview.widget.CardView>

@@ -81,14 +81,10 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drayerLayout;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
-
     Fragment temp=null;
-
     FirebaseAuth mAuth;
     FirebaseUser user;
-
     CustomNotification notification = new CustomNotification(this);
-
     String userUID,fullName,email,password,profileImageLink,loginWith,notificationDate,notificationTime;
 
 

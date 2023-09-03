@@ -40,19 +40,12 @@ public class InstagramListActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         intiView();
-        getYouTubeList();
+//        getYouTubeList();
         back_image.setOnClickListener(v -> { onBackPressed(); });
 
-        card_pending.setOnClickListener(v -> {
-
-            pendingOrders();
-        });
-        card_approved.setOnClickListener(v -> {
-            approvedOrders();
-        });
-        card_rejected.setOnClickListener(v -> {
-            rejectedOrders();
-        });
+        card_pending.setOnClickListener(v -> { pendingOrders(); });
+        card_approved.setOnClickListener(v -> { approvedOrders(); });
+        card_rejected.setOnClickListener(v -> { rejectedOrders(); });
     }
 
     private void rejectedOrders() {
