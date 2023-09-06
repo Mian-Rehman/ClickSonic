@@ -78,6 +78,7 @@ public class InformationActivity extends AppCompatActivity {
         instagram();
         back_image.setOnClickListener(v -> {
             onBackPressed();
+            finish();
         });
 
         radio_followers.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

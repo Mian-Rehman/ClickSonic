@@ -31,9 +31,6 @@
             android:name=".Lists.InstagramListActivity"
             android:exported="false" />
         <activity
-            android:name=".SubActivity.CategorySelectActivity"
-            android:exported="false" />
-        <activity
             android:name=".Lists.YouTubeListActivity"
             android:exported="false" />
         <activity
@@ -68,6 +65,9 @@
             android:exported="false" />
         <activity
             android:name=".Start.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SubActivity.MakeScratchActivity"
             android:exported="false" />
         <activity
             android:name=".Start.SplashActivity"

@@ -161,6 +161,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    public void onBackPressed() {
+        moveTaskToBack(true); // This will move the app to the background
+        finish(); // This will close the current activity
+        System.exit(0); // This will forcefully close the app's process
+    }
 
     private void initViews()
     {
