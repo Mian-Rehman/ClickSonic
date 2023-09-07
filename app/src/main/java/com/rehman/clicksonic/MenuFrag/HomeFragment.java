@@ -42,6 +42,7 @@ import com.rehman.clicksonic.Activity.BuyCoinActivity;
 import com.rehman.clicksonic.Activity.ConvertPointActivity;
 import com.rehman.clicksonic.Activity.DailyBonusActivity;
 import com.rehman.clicksonic.Activity.InformationActivity;
+import com.rehman.clicksonic.Activity.ScratchActivity;
 import com.rehman.clicksonic.R;
 import com.rehman.clicksonic.Utils.LoadingBar;
 
@@ -96,6 +97,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         initViews(view);
         clickLisnters(view);
         checkAppUpdate(view);
+
+        ll_scratch.setOnClickListener(v -> {
+
+            startActivity(new Intent(getActivity(), ScratchActivity.class));
+
+        });
+
         instagram_card.setOnClickListener(v -> {
 
             Intent intent = new Intent(getActivity(), InformationActivity.class);

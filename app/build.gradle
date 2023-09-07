@@ -80,5 +80,7 @@ dependencies {
 
     //lucky wheel
     implementation 'com.github.mmoamenn:LuckyWheel_Android:0.3.0'
+    //Picasso dependency
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 }

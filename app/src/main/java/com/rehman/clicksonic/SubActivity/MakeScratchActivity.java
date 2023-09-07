@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.DatePickerDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,9 +15,11 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,12 +37,17 @@ import com.rehman.clicksonic.Utils.ErrorTost;
 import com.rehman.clicksonic.Utils.LoadingBar;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class MakeScratchActivity extends AppCompatActivity {
 
-    EditText ed_name,ed_price,ed_expire;
+    EditText ed_name,ed_price;
+    TextView tv_expire;
+    Calendar myCalender;
     ImageView back_image,img_scratch;
     Button btn_submit;
     CardView card_pickImage;
@@ -60,8 +68,11 @@ public class MakeScratchActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         initView();
-
         imgPic();
+
+        tv_expire.setOnClickListener(v -> {
+            selectDate();
+        });
 
         back_image.setOnClickListener(v -> {
             onBackPressed();
@@ -72,7 +83,7 @@ public class MakeScratchActivity extends AppCompatActivity {
             loadingBar.ShowDialog("Please wait");
             name = ed_name.getText().toString();
             price = ed_price.getText().toString();
-            expire = ed_expire.getText().toString();
+            expire = tv_expire.getText().toString();
             if (isValid(name,price,expire)){
 
                 saveData();
@@ -81,6 +92,30 @@ public class MakeScratchActivity extends AppCompatActivity {
 
         });
 
+    }
+
+    private void selectDate() {
+
+        DatePickerDialog.OnDateSetListener date= new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                myCalender.set(Calendar.YEAR,year);
+                myCalender.set(Calendar.MONTH,month);
+                myCalender.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+                udateLabel();
+            }
+        };
+
+        new DatePickerDialog(this,date,myCalender.get(Calendar.YEAR),
+                myCalender.get(Calendar.MONTH),myCalender.get(Calendar.DAY_OF_MONTH)).show();
+
+    }
+
+    private void udateLabel() {
+
+        String myFormat="dd/MM/yy";
+        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
+        tv_expire.setText(dateFormat.format(myCalender.getTime()));
     }
 
     private void saveData() {
@@ -205,7 +240,7 @@ public class MakeScratchActivity extends AppCompatActivity {
         //EditText
         ed_name = findViewById(R.id.ed_name);
         ed_price = findViewById(R.id.ed_price);
-        ed_expire = findViewById(R.id.ed_expire);
+        tv_expire = findViewById(R.id.tv_expire);
         //Button
         btn_submit = findViewById(R.id.btn_submit);
         //ImageView
@@ -213,6 +248,7 @@ public class MakeScratchActivity extends AppCompatActivity {
         img_scratch = findViewById(R.id.img_scratch);
         //CardView
         card_pickImage=findViewById(R.id.card_pickImage);
-
+        //Calender
+        myCalender=Calendar.getInstance();
     }
 }

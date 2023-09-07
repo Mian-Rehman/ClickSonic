@@ -99,24 +99,21 @@
                 android:textSize="12sp"
                 android:inputType="number"/>
 
-            <EditText
-                android:id="@+id/ed_expire"
+            <TextView
+                android:id="@+id/tv_expire"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_margin="20dp"
                 android:background="@drawable/edit_background"
-                android:drawableStart="@drawable/icn_expire_calendar"
                 android:drawablePadding="20dp"
-                android:drawableTint="@color/edit_color"
                 android:elevation="10dp"
                 android:hint="Enter Expiry Date..."
                 android:padding="12dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/light_gray"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                app:drawableStartCompat="@drawable/icn_expire_calendar"
+                app:drawableTint="@color/edit_color" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_pickImage"
