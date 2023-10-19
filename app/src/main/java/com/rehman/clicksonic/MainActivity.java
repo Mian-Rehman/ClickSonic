@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     boolean isGetNewAccountBonus;
     int bonus,reward = 20;
     int coin,points;
-    AdView adView;
+//    AdView adView;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -107,58 +107,59 @@ public class MainActivity extends AppCompatActivity {
         checkBonus();
         drawer();
 
-        adView = findViewById(R.id.adView);
-        adView = new AdView(this);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
+//
+//        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+//            @Override
+//            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
+//            }
+//        });
 
-        adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId("ca-app-pub-8763323260658694/1113842599");
+//        adView = findViewById(R.id.adView);
+//        AdView adView = new AdView(this);
+//        adView.setAdSize(AdSize.BANNER);
+//        adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
 
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdClicked() {
-                // Code to be executed when the user clicks on an ad.
-                Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onAdClosed() {
-                // Code to be executed when the user is about to return
-                // to the app after tapping on an ad.
-                Toast.makeText(MainActivity.this, "Closed", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onAdFailedToLoad(LoadAdError adError) {
-                // Code to be executed when an ad request fails.
-                adView.loadAd(adRequest);
-            }
-
-            @Override
-            public void onAdImpression() {
-                // Code to be executed when an impression is recorded
-                // for an ad.
-            }
-
-            @Override
-            public void onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-                Toast.makeText(MainActivity.this, "ads loaded", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onAdOpened() {
-                // Code to be executed when an ad opens an overlay that
-                // covers the screen.
-            }
-        });
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        adView.loadAd(adRequest);
+//        adView.setAdListener(new AdListener() {
+//            @Override
+//            public void onAdClicked() {
+//                // Code to be executed when the user clicks on an ad.
+//                Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onAdClosed() {
+//                // Code to be executed when the user is about to return
+//                // to the app after tapping on an ad.
+//                Toast.makeText(MainActivity.this, "Closed", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onAdFailedToLoad(@NonNull LoadAdError adError) {
+//                // Code to be executed when an ad request fails.
+//                adView.loadAd(adRequest);
+//            }
+//
+//            @Override
+//            public void onAdImpression() {
+//                // Code to be executed when an impression is recorded
+//                // for an ad.
+//            }
+//
+//            @Override
+//            public void onAdLoaded() {
+//                // Code to be executed when an ad finishes loading.
+//                Toast.makeText(MainActivity.this, "ads loaded", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onAdOpened() {
+//                // Code to be executed when an ad opens an overlay that
+//                // covers the screen.
+//            }
+//        });
 
     }
     public void onBackPressed() {
