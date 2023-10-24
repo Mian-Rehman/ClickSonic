@@ -23,6 +23,9 @@
         android:theme="@style/Theme.ClickSonic"
         tools:targetApi="31">
         <activity
+            android:name=".Lists.PaymentHistoryListActivity"
+            android:exported="false" />
+        <activity
             android:name=".Payment.PutInformationActivity"
             android:exported="false" />
         <activity

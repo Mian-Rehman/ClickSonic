@@ -69,6 +69,7 @@ public class ReceiptActivity extends AppCompatActivity {
 
         Map<String, Object> map = new HashMap<>();
         map.put("fullName", fullName);
+        map.put("SocialMedia", title);
         map.put("link", link);
         if (!(followers == null) && (likes == null) && (views == null)){
             map.put(type, followers);

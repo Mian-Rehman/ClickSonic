@@ -56,6 +56,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.rehman.clicksonic.MenuFrag.AboutFragment;
 import com.rehman.clicksonic.MenuFrag.HomeFragment;
+import com.rehman.clicksonic.MenuFrag.OrderHistoryFragment;
 import com.rehman.clicksonic.MenuFrag.PolicyFragment;
 import com.rehman.clicksonic.MenuFrag.ProfileFragment;
 import com.rehman.clicksonic.MenuFrag.SettingFragment;
@@ -202,6 +203,13 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.mm_profile:
                         toolbar.setTitle("Profile");
                         temp=new ProfileFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,temp).commit();
+                        drayerLayout.closeDrawer(GravityCompat.START);
+                        break;
+
+                    case R.id.mm_orderHistory:
+                        toolbar.setTitle("Order History");
+                        temp=new OrderHistoryFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,temp).commit();
                         drayerLayout.closeDrawer(GravityCompat.START);
                         break;

@@ -285,11 +285,12 @@ public class InformationActivity extends AppCompatActivity {
 
     private void saveFirebaseData() {
 
-        DocumentReference ref = FirebaseFirestore.getInstance().collection(name).document();
+        DocumentReference ref = FirebaseFirestore.getInstance().collection("Orders").document();
         String id = ref.getId();
 
         Map<String, Object> map = new HashMap<>();
         map.put("fullName", fullName);
+        map.put("SocialMedia", name);
         map.put("link", link);
         if (radio_followers.isChecked()) {
             if (radio_followers.getText().equals("Subscriber")) {
@@ -314,7 +315,7 @@ public class InformationActivity extends AppCompatActivity {
         map.put("OrderDate", dateTime.getCurrentDate());
         map.put("OrderTime", dateTime.getTimeWithAmPm());
 
-        FirebaseFirestore.getInstance().collection(name).document(id)
+        FirebaseFirestore.getInstance().collection("Orders").document(id)
                 .set(map).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         loadingBar.HideDialog();
