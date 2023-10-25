@@ -42,7 +42,7 @@ public class YouTubeListActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         intiView();
-//        getYouTubeList();
+        getYouTubeList();
         back_image.setOnClickListener(v -> { onBackPressed(); });
 
         card_pending.setOnClickListener(v -> {

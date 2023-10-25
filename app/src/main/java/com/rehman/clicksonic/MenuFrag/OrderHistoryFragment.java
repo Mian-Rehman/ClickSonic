@@ -16,6 +16,8 @@ import com.rehman.clicksonic.Lists.PaymentHistoryListActivity;
 import com.rehman.clicksonic.Lists.TikTokActivity;
 import com.rehman.clicksonic.Lists.YouTubeListActivity;
 import com.rehman.clicksonic.R;
+import com.rehman.clicksonic.SubActivity.UserList.UserFacebookListActivity;
+import com.rehman.clicksonic.SubActivity.UserList.UserInstagramListActivity;
 
 public class OrderHistoryFragment extends Fragment {
 
@@ -36,12 +38,12 @@ public class OrderHistoryFragment extends Fragment {
             startActivity(intent);
         });
         card_instagram.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), InstagramListActivity.class);
+            Intent intent = new Intent(getActivity(), UserInstagramListActivity.class);
             intent.putExtra("type","user");
             startActivity(intent);
         });
         card_facebook.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), FacebookListActivity.class);
+            Intent intent = new Intent(getActivity(), UserFacebookListActivity.class);
             intent.putExtra("type","user");
             startActivity(intent);
         });

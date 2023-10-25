@@ -1,4 +1,4 @@
-package com.rehman.clicksonic.Lists;
+package com.rehman.clicksonic.SubActivity.UserList;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,32 +12,37 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rehman.clicksonic.Adapter.InstagramAdapter;
-import com.rehman.clicksonic.Adapter.YouTubeAdapter;
 import com.rehman.clicksonic.Model.YouTubeModel;
 import com.rehman.clicksonic.R;
+import com.rehman.clicksonic.UserAdapter.UserInstagramAdapter;
 
 import java.util.ArrayList;
 
-public class InstagramListActivity extends AppCompatActivity {
+public class UserInstagramListActivity extends AppCompatActivity {
     CardView card_pending,card_approved,card_rejected;
     ImageView back_image;
     TextView totalCount,tv_status;
     RecyclerView recyclerView;
-    InstagramAdapter adapter;
+    UserInstagramAdapter adapter;
     ArrayList<YouTubeModel> mDataList = new ArrayList<>();
     FirebaseAuth mAuth;
-
+    FirebaseUser mUser;
+    String userUID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_instagram_list);
+        setContentView(R.layout.activity_user_instagram_list);
         mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        assert mUser != null;
+        userUID = mUser.getUid();
 
         intiView();
         getYouTubeList();
@@ -50,12 +55,13 @@ public class InstagramListActivity extends AppCompatActivity {
 
     private void rejectedOrders() {
 
-        adapter = new InstagramAdapter(this,mDataList);
+        adapter = new UserInstagramAdapter(this,mDataList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
         FirebaseFirestore.getInstance().collection("Instagram")
                 .whereEqualTo("Status","rejected")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -81,12 +87,13 @@ public class InstagramListActivity extends AppCompatActivity {
     }
 
     private void approvedOrders() {
-        adapter = new InstagramAdapter(this,mDataList);
+        adapter = new UserInstagramAdapter(this,mDataList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
         FirebaseFirestore.getInstance().collection("Instagram")
                 .whereEqualTo("Status","approved")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -112,12 +119,13 @@ public class InstagramListActivity extends AppCompatActivity {
     }
 
     private void pendingOrders() {
-        adapter = new InstagramAdapter(this,mDataList);
+        adapter = new UserInstagramAdapter(this,mDataList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
         FirebaseFirestore.getInstance().collection("Instagram")
                 .whereEqualTo("Status","pending")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -146,11 +154,12 @@ public class InstagramListActivity extends AppCompatActivity {
 
     private void getYouTubeList() {
 
-        adapter = new InstagramAdapter(this,mDataList);
+        adapter = new UserInstagramAdapter(this,mDataList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
         FirebaseFirestore.getInstance().collection("Instagram")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

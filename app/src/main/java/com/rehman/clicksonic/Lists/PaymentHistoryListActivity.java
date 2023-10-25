@@ -19,7 +19,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rehman.clicksonic.Adapter.AdapterPayment;
+import com.rehman.clicksonic.Adapter.TikTokAdapter;
 import com.rehman.clicksonic.Model.PaymentModel;
+import com.rehman.clicksonic.Model.YouTubeModel;
 import com.rehman.clicksonic.R;
 
 import java.util.ArrayList;
@@ -47,7 +49,7 @@ public class PaymentHistoryListActivity extends AppCompatActivity {
 
 
         intiView();
-//        getYouTubeList();
+        getYouTubeList();
         back_image.setOnClickListener(v -> { onBackPressed(); });
 
         card_pending.setOnClickListener(v -> {
@@ -158,6 +160,36 @@ public class PaymentHistoryListActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                         totalCount.setText(String.valueOf(mDataList.size()));
                         tv_status.setText("Pending Orders:");
+
+                    }
+                });
+
+    }
+    private void getYouTubeList() {
+
+        adapter = new AdapterPayment(this,mDataList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
+        FirebaseFirestore.getInstance().collection("OnlinePayment")
+                .whereEqualTo("userUID",userUID)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error !=null) {
+                            Log.e("Firestore error", error.getMessage());
+                            return;
+                        }
+                        assert value != null;
+                        for (DocumentChange documentChange : value.getDocumentChanges())
+                        {
+                            if (documentChange.getType() == DocumentChange.Type.ADDED){
+                                mDataList.add(documentChange.getDocument().toObject(PaymentModel.class));
+                            }
+
+                        }
+                        adapter.notifyDataSetChanged();
+                        totalCount.setText(String.valueOf(mDataList.size()));
 
                     }
                 });

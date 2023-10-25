@@ -1,4 +1,4 @@
-package com.rehman.clicksonic.Lists;
+package com.rehman.clicksonic.SubActivity.UserList;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,50 +12,64 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.rehman.clicksonic.Adapter.InstagramAdapter;
-import com.rehman.clicksonic.Adapter.YouTubeAdapter;
+import com.rehman.clicksonic.Adapter.TikTokAdapter;
 import com.rehman.clicksonic.Model.YouTubeModel;
 import com.rehman.clicksonic.R;
+import com.rehman.clicksonic.UserAdapter.UserTikTokAdapter;
 
 import java.util.ArrayList;
 
-public class InstagramListActivity extends AppCompatActivity {
+public class UserTikTokListActivity extends AppCompatActivity {
     CardView card_pending,card_approved,card_rejected;
     ImageView back_image;
     TextView totalCount,tv_status;
     RecyclerView recyclerView;
-    InstagramAdapter adapter;
+    UserTikTokAdapter adapter;
     ArrayList<YouTubeModel> mDataList = new ArrayList<>();
     FirebaseAuth mAuth;
+    FirebaseUser mUser;
+    String userUID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_instagram_list);
+        setContentView(R.layout.activity_user_tik_tok_list);
         mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        assert mUser != null;
+        userUID = mUser.getUid();
 
         intiView();
         getYouTubeList();
         back_image.setOnClickListener(v -> { onBackPressed(); });
 
-        card_pending.setOnClickListener(v -> { pendingOrders(); });
-        card_approved.setOnClickListener(v -> { approvedOrders(); });
-        card_rejected.setOnClickListener(v -> { rejectedOrders(); });
-    }
+        card_pending.setOnClickListener(v -> {
 
+            pendingOrders();
+        });
+        card_approved.setOnClickListener(v -> {
+            approvedOrders();
+        });
+        card_rejected.setOnClickListener(v -> {
+            rejectedOrders();
+        });
+    }
     private void rejectedOrders() {
 
-        adapter = new InstagramAdapter(this,mDataList);
+        adapter = new UserTikTokAdapter(this,mDataList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        FirebaseFirestore.getInstance().collection("Instagram")
+        FirebaseFirestore.getInstance().collection("TikTok")
                 .whereEqualTo("Status","rejected")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -78,15 +92,18 @@ public class InstagramListActivity extends AppCompatActivity {
 
                     }
                 });
+
     }
 
     private void approvedOrders() {
-        adapter = new InstagramAdapter(this,mDataList);
+
+        adapter = new UserTikTokAdapter(this,mDataList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        FirebaseFirestore.getInstance().collection("Instagram")
+        FirebaseFirestore.getInstance().collection("TikTok")
                 .whereEqualTo("Status","approved")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -106,18 +123,21 @@ public class InstagramListActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                         totalCount.setText(String.valueOf(mDataList.size()));
                         tv_status.setText("Approved Orders:");
+
                     }
                 });
 
     }
 
     private void pendingOrders() {
-        adapter = new InstagramAdapter(this,mDataList);
+
+        adapter = new UserTikTokAdapter(this,mDataList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        FirebaseFirestore.getInstance().collection("Instagram")
+        FirebaseFirestore.getInstance().collection("TikTok")
                 .whereEqualTo("Status","pending")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -143,14 +163,14 @@ public class InstagramListActivity extends AppCompatActivity {
 
     }
 
-
     private void getYouTubeList() {
 
-        adapter = new InstagramAdapter(this,mDataList);
+        adapter = new UserTikTokAdapter(this,mDataList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        FirebaseFirestore.getInstance().collection("Instagram")
+        FirebaseFirestore.getInstance().collection("TikTok")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -181,7 +201,7 @@ public class InstagramListActivity extends AppCompatActivity {
         totalCount=findViewById(R.id.totalCount);
         tv_status=findViewById(R.id.tv_status);
         //RecycleView
-        recyclerView=findViewById(R.id.instagram_recycler_view);
+        recyclerView=findViewById(R.id.tiktok_recycler_view);
         //CardView
         card_pending=findViewById(R.id.card_pending);
         card_approved=findViewById(R.id.card_approved);

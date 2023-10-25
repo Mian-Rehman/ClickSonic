@@ -23,6 +23,18 @@
         android:theme="@style/Theme.ClickSonic"
         tools:targetApi="31">
         <activity
+            android:name=".SubActivity.UserList.UserYoutTubeListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SubActivity.UserList.UserTikTokListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SubActivity.UserList.UserInstagramListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SubActivity.UserList.UserFacebookListActivity"
+            android:exported="false" />
+        <activity
             android:name=".Lists.PaymentHistoryListActivity"
             android:exported="false" />
         <activity
