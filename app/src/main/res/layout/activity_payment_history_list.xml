@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:fontFamily="@font/jacques_francois"
-                android:text="Your Orders"
+                android:text="Your Online Payments"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:layout_centerVertical="true"
