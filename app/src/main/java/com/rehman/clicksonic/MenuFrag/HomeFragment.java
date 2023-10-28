@@ -43,6 +43,7 @@ import com.rehman.clicksonic.Activity.ConvertPointActivity;
 import com.rehman.clicksonic.Activity.DailyBonusActivity;
 import com.rehman.clicksonic.Activity.InformationActivity;
 import com.rehman.clicksonic.Activity.ScratchActivity;
+import com.rehman.clicksonic.Payment.PaymentActivity;
 import com.rehman.clicksonic.R;
 import com.rehman.clicksonic.Utils.LoadingBar;
 
@@ -54,19 +55,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     TextView coins_text,points_text;
     LinearLayout ll_dailyOffer,ll_bonus,ll_scratch,ll_refresh;
     CardView rate_card,wallet_card,invite_card,youtube_card,earnCoin_card,facebook_card
-                ,tiktok_card,convertCoin_card,instagram_card;
+                ,tiktok_card,convertCoin_card,instagram_card,card_addFunds;
 
     Button btn_convertCoins,btn_buyCoin;
-
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
-
     FirebaseAuth mAuth;
     FirebaseUser user;
-
     String userUID,fullName,email,password,loginWith;
-    int coins,points,bonus;
-
+    int coins,points,bonus,wallet;
     LoadingBar loadingBar;
     private AppUpdateManager appUpdateManager;
     View view;
@@ -200,6 +197,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         });
 
+        card_addFunds.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), PaymentActivity.class);
+            startActivity(intent);
+        });
+
+
         return view;
     }
 
@@ -251,6 +254,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         ll_bonus = view.findViewById(R.id.ll_bonus);
         ll_scratch = view.findViewById(R.id.ll_scratch);
         ll_refresh = view.findViewById(R.id.ll_refresh);
+        //CardView
         rate_card = view.findViewById(R.id.rate_card);
         wallet_card = view.findViewById(R.id.wallet_card);
         invite_card = view.findViewById(R.id.invite_card);
@@ -258,6 +262,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         earnCoin_card = view.findViewById(R.id.earnCoin_card);
         facebook_card = view.findViewById(R.id.facebook_card);
         tiktok_card = view.findViewById(R.id.tiktok_card);
+        card_addFunds = view.findViewById(R.id.card_addFunds);
 //        convertCoin_card = view.findViewById(R.id.convertCoin_card);
         instagram_card = view.findViewById(R.id.instagram_card);
 
@@ -279,14 +284,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                             if (snapshot.exists()){
                                 coins = snapshot.getLong("coin").intValue();
                                 points = snapshot.getLong("points").intValue();
+                                wallet = snapshot.getLong("wallet").intValue();
 
                                 editor.putString("coins",String.valueOf(coins));
                                 editor.putString("points",String.valueOf(points));
+                                editor.putString("wallet",String.valueOf(wallet));
                                 editor.apply();
                                 editor.commit();
 
                                 coins_text.setText(String.valueOf(coins));
-                                points_text.setText(String.valueOf(points));
+//                                points_text.setText(String.valueOf(points));
+                                points_text.setText(String.valueOf(wallet+"Rs"));
                                 loadingBar.HideDialog();
                             }
 

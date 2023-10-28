@@ -152,7 +152,7 @@ public class PutInformationActivity extends AppCompatActivity {
     }
 
     private void getIntentValues() {
-        price = getIntent().getExtras().getString("price");
+//        price = getIntent().getExtras().getString("price");
         number = getIntent().getExtras().getString("number");
         title = getIntent().getExtras().getString("title");
         step1 = getIntent().getExtras().getString("step1");
@@ -164,7 +164,7 @@ public class PutInformationActivity extends AppCompatActivity {
         step7 = getIntent().getExtras().getString("step7");
         int image = getIntent().getIntExtra("image", 0);
 
-        ed_amount.setText(price);
+//        ed_amount.setText(price);
         tv_number.setText(number);
         tv_title.setText(title);
         tv_step1.setText(step1);

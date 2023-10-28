@@ -342,7 +342,7 @@ public class LoginActivity extends AppCompatActivity {
     private void saveData()
     {
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        int coin = 0,bonus = 0,points = 0;
+        int coin = 0,bonus = 0,points = 0,wallet = 0;
         boolean isGetNewAccountBonus = false;
         String profileImageLink = "";
 
@@ -354,6 +354,7 @@ public class LoginActivity extends AppCompatActivity {
         map.put("coin",coin);
         map.put("bonus",bonus);
         map.put("points",points);
+        map.put("wallet",wallet);
         map.put("userUID",userUID);
         map.put("loginWith",loginWith);
         map.put("isGetNewAccountBonus",isGetNewAccountBonus);

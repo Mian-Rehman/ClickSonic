@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +18,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.rehman.clicksonic.Model.PaymentModel;
-import com.rehman.clicksonic.Model.YouTubeModel;
 import com.rehman.clicksonic.R;
 
 import java.util.ArrayList;
@@ -88,8 +86,26 @@ public class AdminPaymentAdapter extends RecyclerView.Adapter<AdminPaymentAdapte
         });
 
         holder.card_approvedAdp.setOnClickListener(v -> {
-
             int clickedPosition = holder.getAdapterPosition();
+
+            // Call a function to fetch the user's wallet amount
+            fetchUserWalletAmount(model.getUserUID(), new OnWalletAmountFetchedListener() {
+                @Override
+                public void onWalletAmountFetched(int walletAmount) {
+                    // Update the user's wallet based on your business logic
+                    int newWalletAmount = walletAmount + Integer.parseInt(model.getAmountTransferred());
+
+                    // Update the Firestore document for the user's wallet
+                    updateWalletAmount(model.getUserUID(), newWalletAmount);
+                    Toast.makeText(context, "Wallet has been updated", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onWalletAmountFetchFailed() {
+                    Toast.makeText(context, "Failed to fetch user's wallet amount", Toast.LENGTH_SHORT).show();
+                }
+            });
+            int money;
 
             Map<String, Object> map = new HashMap<>();
             map.put("Status","approved");
@@ -141,6 +157,40 @@ public class AdminPaymentAdapter extends RecyclerView.Adapter<AdminPaymentAdapte
         });
     }
 
+    private void fetchUserWalletAmount(String userId, OnWalletAmountFetchedListener listener) {
+        FirebaseFirestore.getInstance().collection("users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        int walletAmount = documentSnapshot.getLong("wallet").intValue();
+                        listener.onWalletAmountFetched(walletAmount);
+                    } else {
+                        listener.onWalletAmountFetchFailed();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    listener.onWalletAmountFetchFailed();
+                });
+    }
+    // Function to update the user's wallet amount
+    private void updateWalletAmount(String userId, int newWalletAmount) {
+        Map<String, Object> walletUpdate = new HashMap<>();
+        walletUpdate.put("wallet", newWalletAmount);
+
+        FirebaseFirestore.getInstance().collection("users")
+                .document(userId)
+                .update(walletUpdate)
+                .addOnFailureListener(e -> {
+                    Toast.makeText(context, "Wallet wasn't Updated", Toast.LENGTH_SHORT).show();
+                });
+    }
+    // Listener interface for wallet amount fetching
+    interface OnWalletAmountFetchedListener {
+        void onWalletAmountFetched(int walletAmount);
+
+        void onWalletAmountFetchFailed();
+    }
     @Override
     public int getItemCount() {
         return mPaymentList.size();

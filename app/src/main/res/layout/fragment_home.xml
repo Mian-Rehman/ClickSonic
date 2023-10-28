@@ -473,7 +473,8 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:visibility="invisible"
+                    android:id="@+id/card_addFunds"
+                    android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -493,13 +494,13 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:src="@drawable/tiktok" />
+                            android:src="@drawable/icn_walletcolor" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
-                            android:text="TikTok"
+                            android:text="Add Funds"
                             android:textAlignment="center"
                             android:textColor="@color/main_color"
                             android:textSize="14sp"

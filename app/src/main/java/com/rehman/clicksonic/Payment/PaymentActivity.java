@@ -18,11 +18,10 @@ public class PaymentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_payment);
 
         initValues();
-        getIntentValues();
+//        getIntentValues();
 
         easyPaisa_card.setOnClickListener(v -> {
             Intent intent = new Intent(this,PutInformationActivity.class);
-            intent.putExtra("price",price);
             intent.putExtra("title","EasyPaisa");
             intent.putExtra("number","03491437754");
             intent.putExtra("step1","Step 1: Copy Easypaisa Number and read Easypaisa account name");
@@ -37,7 +36,6 @@ public class PaymentActivity extends AppCompatActivity {
         });
         jazzCash_card.setOnClickListener(v -> {
             Intent intent = new Intent(this,PutInformationActivity.class);
-            intent.putExtra("price",price);
             intent.putExtra("title","JazzCash");
             intent.putExtra("number","03286619121");
             intent.putExtra("step1","Step 1 : copy Jazzcash number and read Jazzcash account name");
@@ -58,7 +56,7 @@ public class PaymentActivity extends AppCompatActivity {
         jazzCash_card =findViewById(R.id.jazzCash_card);
     }
 
-    private void getIntentValues() {
-        price = getIntent().getExtras().getString("price");
-    }
+//    private void getIntentValues() {
+//        price = getIntent().getExtras().getString("price");
+//    }
 }
