@@ -89,8 +89,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
     FirebaseAuth mAuth;
-    FirebaseUser user;
-    String email,password,loginWith = "Google",token,userUID;
+    FirebaseUser mUser;
+    String userUID;
+    String email,password,loginWith = "Google",token;
     boolean passwordVisible;
 
     @Override
@@ -99,8 +100,8 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseUser user = mAuth.getCurrentUser();
         if (user!=null){
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
+//            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//            finish();
         }else{
             createRequest();
         }
