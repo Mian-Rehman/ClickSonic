@@ -6,10 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +38,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.rehman.clicksonic.Utils.CurrentDateTime;
 import com.rehman.clicksonic.Utils.LoadingBar;
 
 public class ScratchActivity extends AppCompatActivity {
@@ -37,11 +48,14 @@ public class ScratchActivity extends AppCompatActivity {
     String imageUrl,name,expire,price;
     CardView card_scratch;
     private FirebaseFirestore db;
+    CurrentDateTime dateTime = new CurrentDateTime(this);
     LoadingBar loadingBar;
     FirebaseAuth mAuth;
     FirebaseUser user;
     String userUID;
     int wallet,amount;
+    AdView adView;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     public void onStart() {
@@ -60,8 +74,10 @@ public class ScratchActivity extends AppCompatActivity {
         loadingBar = new LoadingBar(this);
         loadingBar.ShowDialog("fetch data");
 
-        InitView();
+        ShowAds();
 
+
+        InitView();
         retrieveLatestImage();
 
         back_image.setOnClickListener(v -> {
@@ -70,9 +86,42 @@ public class ScratchActivity extends AppCompatActivity {
         });
         card_scratch.setOnClickListener(v -> {
             showConfirmationDialog();
+            if (mInterstitialAd != null) {
+                mInterstitialAd.show(ScratchActivity.this);
+            } else {
+                Log.d("TAG", "The interstitial ad wasn't ready yet.");
+            }
         });
 
     }
+
+    private void ShowAds() {
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
+            }
+        });
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(this,"ca-app-pub-8763323260658694/8508249288", adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd = interstitialAd;
+                        Log.i("TAG", "onAdLoaded");
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Log.d("TAG", loadAdError.toString());
+                        mInterstitialAd = null;
+                    }
+                });
+    }
+
+
 
 
     private void retrieveLatestImage() {
@@ -89,6 +138,11 @@ public class ScratchActivity extends AppCompatActivity {
                             name = document.getString("name");
                             expire = document.getString("expire");
                             price = document.getString("price");
+
+
+                            if (expire != null && expire.equals(dateTime.getCurrentDate())){
+                                card_scratch.setVisibility(View.GONE);
+                            }
 
                             assert price != null;
                             amount= Integer.parseInt(price);

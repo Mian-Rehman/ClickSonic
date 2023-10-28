@@ -57,7 +57,7 @@ public class SignUpActivity extends AppCompatActivity {
     ImageView back_image;
     EditText ed_name,ed_email,ed_password,ed_conPassword;
     Button btn_create;
-
+    CurrentDateTime dateTime = new CurrentDateTime(this);
     ErrorTost errorTost = new ErrorTost(this);
     LoadingBar loadingBar = new LoadingBar(this);
     String fullName,email,password,conPassword,loginWith = "random",token,userUID,profileImageLink = ""
@@ -137,6 +137,8 @@ public class SignUpActivity extends AppCompatActivity {
         map.put("points",points);
         map.put("userUID",userUID);
         map.put("loginWith",loginWith);
+        map.put("date",dateTime.getCurrentDate());
+        map.put("time",dateTime.getTimeWithAmPm());
         map.put("isGetNewAccountBonus",isGetNewAccountBonus);
         map.put("profileImageLink",profileImageLink);
 

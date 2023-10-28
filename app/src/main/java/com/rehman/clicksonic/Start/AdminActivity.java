@@ -67,6 +67,7 @@ public class AdminActivity extends AppCompatActivity {
 
         if (ed_email.getText().toString().equals(adminEmail) && ed_password.getText().toString().equals(adminPassword)){
             startActivity(new Intent(AdminActivity.this, AdminControlActivity.class));
+            loadingBar.HideDialog();
         }else {
             loadingBar.HideDialog();
             errorTost.showErrorMessage("please enter correct information");

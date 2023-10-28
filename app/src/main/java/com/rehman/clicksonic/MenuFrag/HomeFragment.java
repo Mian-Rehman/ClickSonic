@@ -21,8 +21,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -66,6 +73,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     int coins,points,bonus,wallet;
     LoadingBar loadingBar;
     private AppUpdateManager appUpdateManager;
+    AdView adView;
+    private InterstitialAd mInterstitialAd;
     View view;
 
     @Override
@@ -94,12 +103,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         initViews(view);
         clickLisnters(view);
         checkAppUpdate(view);
+        ShowAds(view);
 
         ll_scratch.setOnClickListener(v -> {
 
             startActivity(new Intent(getActivity(), ScratchActivity.class));
 
         });
+
+
 
         instagram_card.setOnClickListener(v -> {
 
@@ -122,6 +134,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             intent.putExtra("minView","100");
             intent.putExtra("image",R.drawable.instagram);
             startActivity(intent);
+
+            if (mInterstitialAd != null) {
+                mInterstitialAd.show(getActivity());
+            } else {
+                Log.d("TAG", "The interstitial ad wasn't ready yet.");
+            }
 
         });
         facebook_card.setOnClickListener(v -> {
@@ -146,6 +164,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             intent.putExtra("image",R.drawable.facebook);
             startActivity(intent);
+            if (mInterstitialAd != null) {
+                mInterstitialAd.show(getActivity());
+            } else {
+                Log.d("TAG", "The interstitial ad wasn't ready yet.");
+            }
 
         });
         tiktok_card.setOnClickListener(v -> {
@@ -170,6 +193,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             intent.putExtra("image",R.drawable.tiktok);
             startActivity(intent);
+            if (mInterstitialAd != null) {
+                mInterstitialAd.show(getActivity());
+            } else {
+                Log.d("TAG", "The interstitial ad wasn't ready yet.");
+            }
 
         });
         youtube_card.setOnClickListener(v -> {
@@ -194,6 +222,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             intent.putExtra("image",R.drawable.ic_youtube);
             startActivity(intent);
+            if (mInterstitialAd != null) {
+                mInterstitialAd.show(getActivity());
+            } else {
+                Log.d("TAG", "The interstitial ad wasn't ready yet.");
+            }
 
         });
 
@@ -343,6 +376,33 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         // Before starting an update, register a listener for updates.
         appUpdateManager.registerListener(listener);
+
+    }
+    private void ShowAds(View view) {
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
+            }
+        });
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(getActivity(),"ca-app-pub-8763323260658694/8508249288", adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd = interstitialAd;
+                        Log.i("TAG", "onAdLoaded");
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Log.d("TAG", loadAdError.toString());
+                        mInterstitialAd = null;
+                    }
+                });
+
 
     }
 

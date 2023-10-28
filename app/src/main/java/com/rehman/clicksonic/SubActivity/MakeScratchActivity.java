@@ -113,7 +113,7 @@ public class MakeScratchActivity extends AppCompatActivity {
 
     private void udateLabel() {
 
-        String myFormat="dd/MM/yy";
+        String myFormat="dd/MMM/yyyy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
         tv_expire.setText(dateFormat.format(myCalender.getTime()));
     }
