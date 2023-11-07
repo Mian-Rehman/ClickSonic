@@ -45,6 +45,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.rehman.clicksonic.Activity.BonusActivity;
 import com.rehman.clicksonic.Activity.BuyCoinActivity;
 import com.rehman.clicksonic.Activity.ConvertPointActivity;
 import com.rehman.clicksonic.Activity.DailyBonusActivity;
@@ -108,6 +109,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         ll_scratch.setOnClickListener(v -> {
 
             startActivity(new Intent(getActivity(), ScratchActivity.class));
+            if (mInterstitialAd != null) {
+                mInterstitialAd.show(getActivity());
+            } else {
+                Log.d("TAG", "The interstitial ad wasn't ready yet.");
+            }
+
+        });
+
+        ll_bonus.setOnClickListener(v -> {
+
+            startActivity(new Intent(getActivity(), BonusActivity.class));
             if (mInterstitialAd != null) {
                 mInterstitialAd.show(getActivity());
             } else {

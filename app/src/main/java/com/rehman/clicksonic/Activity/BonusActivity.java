@@ -1,15 +1,18 @@
 package com.rehman.clicksonic.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
@@ -20,26 +23,18 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.rehman.clicksonic.Payment.PaymentActivity;
-import com.rehman.clicksonic.R;
-
-import android.util.Log;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.rehman.clicksonic.Payment.PaymentActivity;
+import com.rehman.clicksonic.R;
 import com.rehman.clicksonic.Utils.CurrentDateTime;
 import com.rehman.clicksonic.Utils.ErrorTost;
 import com.rehman.clicksonic.Utils.LoadingBar;
@@ -47,8 +42,7 @@ import com.rehman.clicksonic.Utils.LoadingBar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ScratchActivity extends AppCompatActivity {
-
+public class BonusActivity extends AppCompatActivity {
     TextView tv_offerName,tv_offerPrice,tv_expire,tv_details;
     ImageView img_offer,back_image;
     String imageUrl,name,expire,price,detail,date;
@@ -72,12 +66,10 @@ public class ScratchActivity extends AppCompatActivity {
         assert user != null;
         userUID = user.getUid();
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scratch);
-
+        setContentView(R.layout.activity_bonus);
         loadingBar = new LoadingBar(this);
         loadingBar.ShowDialog("fetching data");
 
@@ -99,13 +91,13 @@ public class ScratchActivity extends AppCompatActivity {
         card_scratch.setOnClickListener(v -> {
             showConfirmationDialog();
             if (mInterstitialAd != null) {
-                mInterstitialAd.show(ScratchActivity.this);
+                mInterstitialAd.show(BonusActivity.this);
             } else {
                 Log.d("TAG", "The interstitial ad wasn't ready yet.");
             }
         });
-
     }
+
 
     private void ShowAds() {
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -134,7 +126,7 @@ public class ScratchActivity extends AppCompatActivity {
     }
 
     private void retrieveLatestImage() {
-        db.collection("scratchOffers")
+        db.collection("bonusOffers")
                 .orderBy("date", Query.Direction.DESCENDING)
                 .limit(1)
                 .get()
@@ -158,7 +150,7 @@ public class ScratchActivity extends AppCompatActivity {
                             amount= Integer.parseInt(price);
 
 
-                            Glide.with(ScratchActivity.this).load(imageUrl).into(img_offer);
+                            Glide.with(BonusActivity.this).load(imageUrl).into(img_offer);
                             tv_offerName.setText(name);
                             tv_expire.setText(expire);
                             tv_details.setText(detail);
@@ -203,7 +195,7 @@ public class ScratchActivity extends AppCompatActivity {
     private void performAction() {
         // You can implement the action you want to perform here.
         // For example, start the PaymentActivity.
-        Intent intent = new Intent(ScratchActivity.this, PaymentActivity.class);
+        Intent intent = new Intent(BonusActivity.this, PaymentActivity.class);
         startActivity(intent);
     }
     private void userData()
@@ -222,7 +214,7 @@ public class ScratchActivity extends AppCompatActivity {
                                     double newAmount = wallet - amount;
                                     updateValur(newAmount);
                                 }else {
-                                    Toast.makeText(ScratchActivity.this, "insufficient Balance", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(BonusActivity.this, "insufficient Balance", Toast.LENGTH_SHORT).show();
                                 }
                                 loadingBar.HideDialog();
                             }
@@ -249,7 +241,7 @@ public class ScratchActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> updateTask) {
                         if (updateTask.isSuccessful()) {
                             saveData();
-                            Toast.makeText(ScratchActivity.this, "payment was successfully done", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BonusActivity.this, "payment was successfully done", Toast.LENGTH_SHORT).show();
                         } else {
                             // Handle update failure
                             Log.e("WalletUpdate", "Failed to update wallet amount", updateTask.getException());
@@ -259,39 +251,33 @@ public class ScratchActivity extends AppCompatActivity {
                 });
     }
     private void saveData() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        assert user != null;
-        userUID = user.getUid();
+
+        DocumentReference ref = FirebaseFirestore.getInstance().collection("boughtItems").document();
+        String id = ref.getId();
 
         Map<String, Object> map = new HashMap<>();
         map.put("moneySpent", price);
         map.put("offerBought", name);
-        map.put("dateOfPurchase", dateTime.getCurrentDate());
         map.put("userUID", userUID);
+        map.put("documentID", id);
+        map.put("dateOfPurchase", dateTime.getCurrentDate());
         map.put("timeOfPurchase", dateTime.getTimeWithAmPm());
 
-        FirebaseFirestore.getInstance().collection("boughtItems")
-                .add(map)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if (task.isSuccessful()) {
-                            loadingBar.HideDialog();
-                            Toast.makeText(ScratchActivity.this, "Your Order has been placed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+        FirebaseFirestore.getInstance().collection("boughtItems").document(id)
+                .set(map).addOnCompleteListener(task -> {
+                    if (task.isSuccessful())
+                    {
                         loadingBar.HideDialog();
-                        errorTost.showErrorMessage("Something went wrong");
+                        Toast.makeText(BonusActivity.this, "Your Order has been placed", Toast.LENGTH_SHORT).show();
                     }
+                }).addOnFailureListener(e -> {
+                    loadingBar.HideDialog();
+                    errorTost.showErrorMessage("Something went wrong");
                 });
 
     }
 
-        private void InitView() {
+    private void InitView() {
 
         //textView
         tv_offerName = findViewById(R.id.tv_offerName);
@@ -307,6 +293,4 @@ public class ScratchActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
     }
-
-
 }

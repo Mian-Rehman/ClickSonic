@@ -13,10 +13,11 @@ import com.rehman.clicksonic.Lists.TikTokActivity;
 import com.rehman.clicksonic.Lists.UserListActivity;
 import com.rehman.clicksonic.Lists.YouTubeListActivity;
 import com.rehman.clicksonic.R;
+import com.rehman.clicksonic.SubActivity.MakeBonusActivity;
 import com.rehman.clicksonic.SubActivity.MakeScratchActivity;
 
 public class AdminControlActivity extends AppCompatActivity {
-    CardView card_user,card_youTube,card_instagram,card_facebook,card_tiktok,
+    CardView card_user,card_youTube,card_instagram,card_facebook,card_tiktok,card_bonus,
             card_scratch,money_card;
 
     @Override
@@ -34,6 +35,7 @@ public class AdminControlActivity extends AppCompatActivity {
         card_tiktok.setOnClickListener(v -> {startActivity(new Intent(AdminControlActivity.this, TikTokActivity.class));});
         card_scratch.setOnClickListener(v -> {startActivity(new Intent(AdminControlActivity.this, MakeScratchActivity.class));});
         money_card.setOnClickListener(v -> {startActivity(new Intent(AdminControlActivity.this, AdminPaymentViewlistActivity.class));});
+        card_bonus.setOnClickListener(v -> {startActivity(new Intent(AdminControlActivity.this, MakeBonusActivity.class));});
 
     }
 
@@ -49,6 +51,7 @@ public class AdminControlActivity extends AppCompatActivity {
         card_facebook =findViewById(R.id.card_facebook);
         card_tiktok =findViewById(R.id.card_tiktok);
         card_scratch =findViewById(R.id.card_scratch);
+        card_bonus =findViewById(R.id.card_bonus);
         money_card =findViewById(R.id.money_card);
 
     }

@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/background">
+    android:background="@color/background"
+    tools:context=".Activity.AdminControlActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -330,7 +332,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:visibility="invisible"
+            android:id="@+id/card_bonus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -351,14 +353,13 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:src="@drawable/tiktok"
-                    android:padding="4dp"
-                    app:tint="@color/main_color" />
+                    android:src="@drawable/bonus"
+                    android:padding="4dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TikTok"
+                    android:text="Bonus"
                     android:textAlignment="center"
                     android:textSize="14sp"
                     android:padding="10dp"
