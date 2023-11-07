@@ -55,15 +55,14 @@ public class SignUpActivity extends AppCompatActivity {
     private static final int NOTIFICATION_ID = 100;
 
     ImageView back_image;
-    EditText ed_name,ed_email,ed_password,ed_conPassword;
+    EditText ed_name, ed_email, ed_password, ed_conPassword;
     Button btn_create;
     CurrentDateTime dateTime = new CurrentDateTime(this);
     ErrorTost errorTost = new ErrorTost(this);
     LoadingBar loadingBar = new LoadingBar(this);
-    String fullName,email,password,conPassword,loginWith = "random",token,userUID,profileImageLink = ""
-            ,notificationTime,notificationDate;
-     int      coin = 0,points = 0,bonus = 0;
-     boolean isGetNewAccountBonus;
+    String fullName, email, password, conPassword, loginWith = "random", token, userUID, profileImageLink = "", notificationTime, notificationDate;
+    int coin = 0, points = 0, bonus = 0, wallet = 0;
+    boolean isGetNewAccountBonus;
     FirebaseAuth mAuth;
 
 
@@ -90,10 +89,10 @@ public class SignUpActivity extends AppCompatActivity {
             password = ed_password.getText().toString().trim();
             conPassword = ed_conPassword.getText().toString().trim();
 
-            if (isValid(fullName,email,password,conPassword)){
-                if (password.equals(conPassword)){
-                    createAccountWithEmailPassword(email,password);
-                }else{
+            if (isValid(fullName, email, password, conPassword)) {
+                if (password.equals(conPassword)) {
+                    createAccountWithEmailPassword(email, password);
+                } else {
                     loadingBar.HideDialog();
                     errorTost.showErrorMessage("Password Not Match");
                 }
@@ -103,58 +102,59 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private void createAccountWithEmailPassword(String email, String password)
-    {
+    private void createAccountWithEmailPassword(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            saveData(email,password);
+                            saveData(email, password);
                             // Sign in success, update UI with the signed-in user's information
 //                            emailVerfication(user);
                         } else {
                             // If sign in fails, display a message to the user.
-                          loadingBar.HideDialog();
-                          errorTost.showErrorMessage("failed to create account");
+                            loadingBar.HideDialog();
+                            errorTost.showErrorMessage("failed to create account");
                         }
                     }
                 });
     }
 
-    private void saveData(String email, String password)
-    {
+    private void saveData(String email, String password) {
+
+
         FirebaseUser user = mAuth.getCurrentUser();
         assert user != null;
         userUID = user.getUid();
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("fullName",fullName);
-        map.put("email",email);
-        map.put("password",password);
-        map.put("coin",coin);
-        map.put("bonus",bonus);
-        map.put("points",points);
-        map.put("userUID",userUID);
-        map.put("loginWith",loginWith);
-        map.put("date",dateTime.getCurrentDate());
-        map.put("time",dateTime.getTimeWithAmPm());
-        map.put("isGetNewAccountBonus",isGetNewAccountBonus);
-        map.put("profileImageLink",profileImageLink);
+        Map<String, Object> map = new HashMap<>();
+        map.put("fullName", fullName);
+        map.put("email", email);
+        map.put("password", password);
+        map.put("coin", coin);
+        map.put("bonus", bonus);
+        map.put("points", points);
+        map.put("wallet", wallet);
+        map.put("userUID", userUID);
+        map.put("loginWith", loginWith);
+        map.put("date", dateTime.getCurrentDate());
+        map.put("time", dateTime.getTimeWithAmPm());
+        map.put("isGetNewAccountBonus", isGetNewAccountBonus);
+        map.put("profileImageLink", profileImageLink);
 
         FirebaseFirestore.getInstance().collection("users").document(userUID)
                 .set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
 
-               if (task.isSuccessful()){
-                   loadingBar.HideDialog();
-                   accountCreationDialog();
-                   pushNotification();
-               }
-            }
+                        if (task.isSuccessful()) {
+                            loadingBar.HideDialog();
+                            accountCreationDialog();
+                            pushNotification();
+                        }
+                    }
 
-        }).addOnFailureListener(new OnFailureListener() {
+                }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         loadingBar.HideDialog();
@@ -164,9 +164,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private boolean isValid(String fullName, String email, String password, String conPassword)
-    {
-        if (fullName.isEmpty()){
+    private boolean isValid(String fullName, String email, String password, String conPassword) {
+        if (fullName.isEmpty()) {
             loadingBar.HideDialog();
             errorTost.showErrorMessage("Name Required");
             return false;
@@ -174,21 +173,20 @@ public class SignUpActivity extends AppCompatActivity {
 
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-        if (!email.matches(emailPattern) || email.isEmpty())
-        {
+        if (!email.matches(emailPattern) || email.isEmpty()) {
             loadingBar.HideDialog();
             errorTost.showErrorMessage("Email Required");
             ed_email.requestFocus();
             return false;
         }
 
-        if (password.isEmpty()){
+        if (password.isEmpty()) {
             loadingBar.HideDialog();
             errorTost.showErrorMessage("Enter Valid Password");
             return false;
         }
 
-        if (conPassword.isEmpty()){
+        if (conPassword.isEmpty()) {
             loadingBar.HideDialog();
             errorTost.showErrorMessage("Repeat Password");
             return false;
@@ -197,8 +195,7 @@ public class SignUpActivity extends AppCompatActivity {
         return true;
     }
 
-    private void initViews()
-    {
+    private void initViews() {
         back_image = findViewById(R.id.back_image);
         ed_name = findViewById(R.id.ed_name);
         ed_email = findViewById(R.id.ed_email);
@@ -207,8 +204,7 @@ public class SignUpActivity extends AppCompatActivity {
         btn_create = findViewById(R.id.btn_create);
     }
 
-    private void accountCreationDialog()
-    {
+    private void accountCreationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View layout_dialog = LayoutInflater.from(this).inflate(R.layout.account_creation_dialog, null);
         builder.setView(layout_dialog);
@@ -224,15 +220,14 @@ public class SignUpActivity extends AppCompatActivity {
         dialog.getWindow().setWindowAnimations(R.style.alertDialogAnimation);
 
         btn_signIn.setOnClickListener(v -> {
-            startActivity(new Intent(this,LoginActivity.class));
+            startActivity(new Intent(this, LoginActivity.class));
             finish();
             dialog.dismiss();
         });
 
     }
 
-    private void pushNotification()
-    {
+    private void pushNotification() {
         CurrentDateTime currentDateTime = new CurrentDateTime(this);
         notificationDate = currentDateTime.getCurrentDate();
         notificationTime = currentDateTime.getTimeWithAmPm();
@@ -245,22 +240,22 @@ public class SignUpActivity extends AppCompatActivity {
                 userUID = mAuth.getCurrentUser().getUid();
 
                 HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put("token",token);
+                hashMap.put("token", token);
 
                 FirebaseDatabase.getInstance().getReference("users").child(userUID)
                         .updateChildren(hashMap);
                 String notificationId = FirebaseDatabase.getInstance().getReference().push().getKey();
                 String notificationMessage = "Your account has been successfully registered";
                 NotificationData notificationData = new NotificationData(notificationId, userUID, "signUp",
-                        "Registration Successfull", notificationMessage,notificationDate,notificationTime, true);
+                        "Registration Successfull", notificationMessage, notificationDate, notificationTime, true);
 
-                Map<String,Object> map = new HashMap<>();
-                map.put("token",token);
+                Map<String, Object> map = new HashMap<>();
+                map.put("token", token);
 
                 assert notificationId != null;
                 FirebaseFirestore.getInstance().collection("users")
-                                .document(userUID).collection("Notifications")
-                                .document(notificationId).set(notificationData);
+                        .document(userUID).collection("Notifications")
+                        .document(notificationId).set(notificationData);
 
 
                 SendNotification sendNotification = new SendNotification("Registration Successfull", notificationMessage,
@@ -273,9 +268,8 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void notification()
-    {
-        Drawable drawable = ResourcesCompat.getDrawable(getResources(),R.drawable.transparent_logo,null);
+    private void notification() {
+        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.transparent_logo, null);
         BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
         assert bitmapDrawable != null;
         Bitmap bitmapIcon = bitmapDrawable.getBitmap();
@@ -290,9 +284,9 @@ public class SignUpActivity extends AppCompatActivity {
                     .setChannelId(CHANNEL_ID)
                     .build();
 
-            manager.createNotificationChannel(new NotificationChannel(CHANNEL_ID,"NEW CHANNEL"
+            manager.createNotificationChannel(new NotificationChannel(CHANNEL_ID, "NEW CHANNEL"
                     , NotificationManager.IMPORTANCE_HIGH));
-        }else{
+        } else {
             notification = new Notification.Builder(this)
                     .setLargeIcon(bitmapIcon)
                     .setSmallIcon(R.drawable.transparent_logo)
@@ -302,17 +296,15 @@ public class SignUpActivity extends AppCompatActivity {
 
         }
 
-        manager.notify(NOTIFICATION_ID,notification);
+        manager.notify(NOTIFICATION_ID, notification);
 
     }
 
-    private String getTimeWithAmPm()
-    {
+    private String getTimeWithAmPm() {
         return new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(new Date());
     }
 
-    private String getCurrentdate()
-    {
+    private String getCurrentdate() {
         return new SimpleDateFormat("dd/LLL/yyyy", Locale.getDefault()).format(new Date());
     }
 }

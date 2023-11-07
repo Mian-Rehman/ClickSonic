@@ -108,6 +108,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         ll_scratch.setOnClickListener(v -> {
 
             startActivity(new Intent(getActivity(), ScratchActivity.class));
+            if (mInterstitialAd != null) {
+                mInterstitialAd.show(getActivity());
+            } else {
+                Log.d("TAG", "The interstitial ad wasn't ready yet.");
+            }
 
         });
 

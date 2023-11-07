@@ -99,6 +99,24 @@
                 android:textSize="12sp"
                 android:inputType="number"/>
 
+            <EditText
+                android:id="@+id/ed_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/edit_background"
+                android:drawableStart="@drawable/icn_detail"
+                android:drawablePadding="20dp"
+                android:drawableTint="@color/edit_color"
+                android:elevation="10dp"
+                android:hint="Enter Details..."
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/light_gray"
+                android:textSize="12sp"/>
+
             <TextView
                 android:id="@+id/tv_expire"
                 android:layout_width="match_parent"

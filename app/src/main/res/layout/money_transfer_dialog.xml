@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="40dp"
+        app:cardCornerRadius="20dp"
+        android:backgroundTint="@color/white"
+        android:background="@color/white"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="@color/white"
+            >
+
+            <ImageView
+                android:id="@+id/education_splash"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:padding="20dp"
+              android:src="@drawable/transparent_logo" />
+
+
+
+            <TextView
+                android:id="@+id/male_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2 Rs Will be deducted from account!"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <Button
+                    android:id="@+id/btn_Yes"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/jacques_francois"
+                    android:text="Yes"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:layout_margin="5dp"
+                    />
+                <Button
+                    android:id="@+id/btn_No"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/jacques_francois"
+                    android:text="No"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:layout_margin="5dp"
+                    />
+            </LinearLayout>
+
+
+
+
+
+
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

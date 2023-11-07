@@ -86,8 +86,6 @@ public class LoginActivity extends AppCompatActivity {
     RelativeLayout rr_error;
     LoadingBar loadingBar;
     ErrorTost errorTost;
-
-
     FirebaseAuth mAuth;
     FirebaseUser mUser;
     String userUID;
@@ -100,8 +98,8 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseUser user = mAuth.getCurrentUser();
         if (user!=null){
-//            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//            finish();
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
         }else{
             createRequest();
         }

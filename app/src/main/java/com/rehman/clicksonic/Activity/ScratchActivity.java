@@ -21,8 +21,10 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.rehman.clicksonic.Payment.PaymentActivity;
 import com.rehman.clicksonic.R;
 
@@ -39,13 +41,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rehman.clicksonic.Utils.CurrentDateTime;
+import com.rehman.clicksonic.Utils.ErrorTost;
 import com.rehman.clicksonic.Utils.LoadingBar;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ScratchActivity extends AppCompatActivity {
 
-    TextView tv_offerName,tv_offerPrice,tv_expire;
+    TextView tv_offerName,tv_offerPrice,tv_expire,tv_details;
     ImageView img_offer,back_image;
-    String imageUrl,name,expire,price;
+    String imageUrl,name,expire,price,detail,date;
+    ErrorTost errorTost = new ErrorTost(this);
     CardView card_scratch;
     private FirebaseFirestore db;
     CurrentDateTime dateTime = new CurrentDateTime(this);
@@ -72,13 +79,18 @@ public class ScratchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scratch);
 
         loadingBar = new LoadingBar(this);
-        loadingBar.ShowDialog("fetch data");
+        loadingBar.ShowDialog("fetching data");
+
 
         ShowAds();
-
-
         InitView();
         retrieveLatestImage();
+
+//        check = tv_offerName.getText().toString();
+//        if (check.equals("Null")){
+//            loadingBar.HideDialog();
+//            card_scratch.setVisibility(View.GONE);
+//        }
 
         back_image.setOnClickListener(v -> {
             onBackPressed();
@@ -137,6 +149,7 @@ public class ScratchActivity extends AppCompatActivity {
                             imageUrl = document.getString("scratchUrl");
                             name = document.getString("name");
                             expire = document.getString("expire");
+                            detail = document.getString("detail");
                             price = document.getString("price");
 
 
@@ -151,6 +164,7 @@ public class ScratchActivity extends AppCompatActivity {
                             Glide.with(ScratchActivity.this).load(imageUrl).into(img_offer);
                             tv_offerName.setText(name);
                             tv_expire.setText(expire);
+                            tv_details.setText(detail);
                             tv_offerPrice.setText(price);
                             loadingBar.HideDialog();
 
@@ -165,7 +179,7 @@ public class ScratchActivity extends AppCompatActivity {
     private void showConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirm Action");
-        builder.setMessage("Are you sure you want to perform this action?");
+        builder.setMessage("Are you sure you want to buy this Offer?");
 
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
@@ -237,6 +251,7 @@ public class ScratchActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> updateTask) {
                         if (updateTask.isSuccessful()) {
+                            saveData();
                             Toast.makeText(ScratchActivity.this, "payment was successfully done", Toast.LENGTH_SHORT).show();
                         } else {
                             // Handle update failure
@@ -246,14 +261,46 @@ public class ScratchActivity extends AppCompatActivity {
                     }
                 });
     }
+    private void saveData() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        assert user != null;
+        userUID = user.getUid();
 
+        Map<String, Object> map = new HashMap<>();
+        map.put("moneySpent", price);
+        map.put("offerBought", name);
+        map.put("dateOfPurchase", dateTime.getCurrentDate());
+        map.put("userUID", userUID);
+        map.put("timeOfPurchase", dateTime.getTimeWithAmPm());
 
-    private void InitView() {
+        FirebaseFirestore.getInstance().collection("boughtItems")
+                .add(map)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        if (task.isSuccessful()) {
+                            loadingBar.HideDialog();
+                            Toast.makeText(ScratchActivity.this, "Your Order has been placed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        loadingBar.HideDialog();
+                        errorTost.showErrorMessage("Something went wrong");
+                    }
+                });
+
+    }
+
+        private void InitView() {
 
         //textView
         tv_offerName = findViewById(R.id.tv_offerName);
         tv_offerPrice = findViewById(R.id.tv_offerPrice);
         tv_expire = findViewById(R.id.tv_expire);
+        tv_details = findViewById(R.id.tv_details);
         //ImageView
         img_offer = findViewById(R.id.img_offer);
         back_image = findViewById(R.id.back_image);

@@ -45,13 +45,13 @@ import java.util.Map;
 
 public class MakeScratchActivity extends AppCompatActivity {
 
-    EditText ed_name,ed_price;
+    EditText ed_name,ed_price,ed_detail;
     TextView tv_expire;
     Calendar myCalender;
     ImageView back_image,img_scratch;
     Button btn_submit;
     CardView card_pickImage;
-    String name,price,expire,scratchUrl;
+    String name,price,expire,scratchUrl,detail;
     int priceCheck;
     Uri scratchUri;
     Bitmap scratchBitmap;
@@ -83,13 +83,12 @@ public class MakeScratchActivity extends AppCompatActivity {
             loadingBar.ShowDialog("Please wait");
             name = ed_name.getText().toString();
             price = ed_price.getText().toString();
+            detail = ed_detail.getText().toString();
             expire = tv_expire.getText().toString();
             if (isValid(name,price,expire)){
 
                 saveData();
-
             }
-
         });
 
     }
@@ -150,6 +149,7 @@ public class MakeScratchActivity extends AppCompatActivity {
         map.put("name",name);
         map.put("price",price);
         map.put("expire",expire);
+        map.put("detail",detail);
         map.put("scratchUrl",scratchUrl);
         map.put("registrationFormId",id);
         map.put("date",dateTime.getCurrentDate());
@@ -240,6 +240,7 @@ public class MakeScratchActivity extends AppCompatActivity {
         //EditText
         ed_name = findViewById(R.id.ed_name);
         ed_price = findViewById(R.id.ed_price);
+        ed_detail = findViewById(R.id.ed_detail);
         tv_expire = findViewById(R.id.tv_expire);
         //Button
         btn_submit = findViewById(R.id.btn_submit);

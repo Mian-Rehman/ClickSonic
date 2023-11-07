@@ -71,7 +71,6 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
                     android:orientation="horizontal">
 
                     <com.rehman.clicksonic.Utils.CustomUnderlineTextView
@@ -98,7 +97,6 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
                     android:orientation="horizontal">
 
                     <com.rehman.clicksonic.Utils.CustomUnderlineTextView
@@ -125,7 +123,6 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
                     android:orientation="horizontal">
 
                     <com.rehman.clicksonic.Utils.CustomUnderlineTextView
@@ -140,6 +137,33 @@
 
                     <com.rehman.clicksonic.Utils.CustomUnderlineTextView
                         android:id="@+id/tv_expire"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="10dp"
+                        android:padding="5dp"
+                        android:text="Null"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.rehman.clicksonic.Utils.CustomUnderlineTextView
+                        android:id="@+id/tv4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:elevation="10dp"
+                        android:text="Details:"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <com.rehman.clicksonic.Utils.CustomUnderlineTextView
+                        android:id="@+id/tv_details"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:elevation="10dp"
