@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:fontFamily="@font/jacques_francois"
-            android:text="Make Scratch Offers"
+            android:text="Make Bonus Offers"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:layout_centerVertical="true"

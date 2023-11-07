@@ -218,7 +218,7 @@ public class DailyBonusActivity extends AppCompatActivity {
                         if (updateTask.isSuccessful()) {
                             Toast.makeText(DailyBonusActivity.this, "Coins Updated", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(DailyBonusActivity.this, "not done", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DailyBonusActivity.this, "Coins Were not updated", Toast.LENGTH_SHORT).show();
                             // Handle update failure
                             Log.e("CoinUpdate", "Failed to update Coins", updateTask.getException());
                             // You may want to show an error message to the user
@@ -247,7 +247,7 @@ public class DailyBonusActivity extends AppCompatActivity {
                     {
                         CoinData(coinUpdate);
                         loadingBar.HideDialog();
-                        Toast.makeText(DailyBonusActivity.this, "coins added", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(DailyBonusActivity.this, "coins added", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(e -> {
                     loadingBar.HideDialog();
@@ -274,9 +274,9 @@ public class DailyBonusActivity extends AppCompatActivity {
                                 .addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
                                         CoinData(coinUpdate);
-                                        Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(this, "Failed to update", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(this, "Failed to register", Toast.LENGTH_SHORT).show();
                                     }
                                     loadingBar.HideDialog();
                                 })
@@ -316,7 +316,7 @@ public class DailyBonusActivity extends AppCompatActivity {
                             SpinCount = snapshot.getLong("SpinCount").intValue();
 //                            SpinCount = Integer.parseInt(Objects.requireNonNull(snapshot.getString("SpinCount")));
                             loadingBar.HideDialog();
-                            Toast.makeText(DailyBonusActivity.this, "Data Found", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(DailyBonusActivity.this, "Data Found", Toast.LENGTH_SHORT).show();
 
                             if (SpinCount >= 1 && SpinCount <= 4){
                                 moneyTransferDialog();
@@ -328,7 +328,7 @@ public class DailyBonusActivity extends AppCompatActivity {
                             }
 
                         } else {
-                            Toast.makeText(DailyBonusActivity.this, "Not Found", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(DailyBonusActivity.this, "Not Found", Toast.LENGTH_SHORT).show();
                             isDataExist = false;
                             saveData();
                         }

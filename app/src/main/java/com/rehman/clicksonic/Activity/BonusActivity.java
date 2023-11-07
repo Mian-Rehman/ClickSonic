@@ -252,29 +252,31 @@ public class BonusActivity extends AppCompatActivity {
     }
     private void saveData() {
 
-        DocumentReference ref = FirebaseFirestore.getInstance().collection("boughtItems").document();
-        String id = ref.getId();
-
         Map<String, Object> map = new HashMap<>();
         map.put("moneySpent", price);
         map.put("offerBought", name);
         map.put("userUID", userUID);
-        map.put("documentID", id);
         map.put("dateOfPurchase", dateTime.getCurrentDate());
         map.put("timeOfPurchase", dateTime.getTimeWithAmPm());
 
-        FirebaseFirestore.getInstance().collection("boughtItems").document(id)
-                .set(map).addOnCompleteListener(task -> {
-                    if (task.isSuccessful())
-                    {
-                        loadingBar.HideDialog();
-                        Toast.makeText(BonusActivity.this, "Your Order has been placed", Toast.LENGTH_SHORT).show();
+        FirebaseFirestore.getInstance().collection("boughtItems")
+                .add(map)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        if (task.isSuccessful()) {
+                            loadingBar.HideDialog();
+                            Toast.makeText(BonusActivity.this, "Your Order has been placed", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }).addOnFailureListener(e -> {
-                    loadingBar.HideDialog();
-                    errorTost.showErrorMessage("Something went wrong");
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        loadingBar.HideDialog();
+                        errorTost.showErrorMessage("Something went wrong");
+                    }
                 });
-
     }
 
     private void InitView() {
