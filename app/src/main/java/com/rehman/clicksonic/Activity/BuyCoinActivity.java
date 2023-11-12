@@ -53,7 +53,7 @@ public class BuyCoinActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                onChangeTab(position);
+//                onChangeTab(position);
             }
 
             @Override
@@ -72,9 +72,7 @@ public class BuyCoinActivity extends AppCompatActivity {
             viewPager.setCurrentItem(0,true);
         });
 
-        buy_points_layout.setOnClickListener(v -> {
-            viewPager.setCurrentItem(1,true);
-        });
+
 
     }
 
@@ -87,15 +85,6 @@ public class BuyCoinActivity extends AppCompatActivity {
 
             buy_points_text.setTextColor(ContextCompat.getColor(this,R.color.gray));
             buy_points_view.setBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.gray,this.getTheme()));
-        }
-
-        if (position == 1)
-        {
-            buy_coins_text.setTextColor(ContextCompat.getColor(this,R.color.gray));
-            buy_coins_view.setBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.gray,this.getTheme()));
-
-            buy_points_text.setTextColor(ContextCompat.getColor(this,R.color.main_color));
-            buy_points_view.setBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.main_color,this.getTheme()));
         }
     }
 

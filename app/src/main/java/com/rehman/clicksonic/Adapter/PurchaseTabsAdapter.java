@@ -31,9 +31,9 @@ public class PurchaseTabsAdapter extends FragmentStateAdapter {
                 fragment = new CoinsPurhaseFragment();
                 break;
 
-            case 1:
-                fragment = new PointsPurhaseFragment();
-                break;
+//            case 1:
+//                fragment = new PointsPurhaseFragment();
+//                break;
 
 
         }
@@ -43,6 +43,6 @@ public class PurchaseTabsAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 1;
     }
 }
