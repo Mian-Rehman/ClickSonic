@@ -10,8 +10,8 @@ android {
         applicationId "com.rehman.clicksonic"
         minSdk 21
         targetSdk 33
-        versionCode 10
-        versionName "1.1.0"
+        versionCode 14
+        versionName "1.1.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -54,7 +54,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:8.0.0'
     implementation 'com.google.android.gms:play-services-auth:20.7.0'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
-    implementation 'com.google.firebase:firebase-storage:20.2.1'
+    implementation 'com.google.firebase:firebase-storage:20.3.0'
     implementation 'com.firebaseui:firebase-ui-firestore:8.0.2'
 
     //lottie animation
@@ -76,11 +76,14 @@ dependencies {
     implementation 'com.google.android.play:app-update:2.1.0'
 
     //google admob
-    implementation 'com.google.android.gms:play-services-ads:22.4.0'
+    implementation 'com.google.android.gms:play-services-ads:22.5.0'
 
     //lucky wheel
     implementation 'com.github.mmoamenn:LuckyWheel_Android:0.3.0'
     //Picasso dependency
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //In App Reviews
+    implementation 'com.google.android.play:review:2.0.1'
 
 }

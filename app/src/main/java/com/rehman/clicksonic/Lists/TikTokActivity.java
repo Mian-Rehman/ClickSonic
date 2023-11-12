@@ -23,6 +23,7 @@ import com.rehman.clicksonic.Model.YouTubeModel;
 import com.rehman.clicksonic.R;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TikTokActivity extends AppCompatActivity {
     CardView card_pending,card_approved,card_rejected;
@@ -32,12 +33,14 @@ public class TikTokActivity extends AppCompatActivity {
     TikTokAdapter adapter;
     ArrayList<YouTubeModel> mDataList = new ArrayList<>();
     FirebaseAuth mAuth;
+    String userUID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tik_tok);
         mAuth = FirebaseAuth.getInstance();
+        userUID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
         intiView();
         getYouTubeList();
@@ -62,6 +65,7 @@ public class TikTokActivity extends AppCompatActivity {
 
         FirebaseFirestore.getInstance().collection("TikTok")
                 .whereEqualTo("Status","rejected")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -95,6 +99,7 @@ public class TikTokActivity extends AppCompatActivity {
 
         FirebaseFirestore.getInstance().collection("TikTok")
                 .whereEqualTo("Status","approved")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -128,6 +133,7 @@ public class TikTokActivity extends AppCompatActivity {
 
         FirebaseFirestore.getInstance().collection("TikTok")
                 .whereEqualTo("Status","pending")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

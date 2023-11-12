@@ -25,6 +25,7 @@ import com.rehman.clicksonic.Model.YouTubeModel;
 import com.rehman.clicksonic.R;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class YouTubeListActivity extends AppCompatActivity {
     CardView card_pending,card_approved,card_rejected;
@@ -34,12 +35,14 @@ public class YouTubeListActivity extends AppCompatActivity {
     YouTubeAdapter adapter;
     ArrayList<YouTubeModel> mDataList = new ArrayList<>();
     FirebaseAuth mAuth;
+    String userUID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_you_tube_list);
         mAuth = FirebaseAuth.getInstance();
+        userUID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
         intiView();
         getYouTubeList();
@@ -66,6 +69,7 @@ public class YouTubeListActivity extends AppCompatActivity {
 
         FirebaseFirestore.getInstance().collection("YouTube")
                 .whereEqualTo("Status","rejected")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -99,6 +103,7 @@ public class YouTubeListActivity extends AppCompatActivity {
 
         FirebaseFirestore.getInstance().collection("YouTube")
                 .whereEqualTo("Status","approved")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -132,6 +137,7 @@ public class YouTubeListActivity extends AppCompatActivity {
 
         FirebaseFirestore.getInstance().collection("YouTube")
                 .whereEqualTo("Status","pending")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

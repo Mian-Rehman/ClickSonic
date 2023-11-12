@@ -3,16 +3,19 @@ package com.rehman.clicksonic.MenuFrag;
 import static android.app.Activity.RESULT_OK;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +44,9 @@ import com.google.android.play.core.install.InstallStateUpdatedListener;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -55,6 +61,7 @@ import com.rehman.clicksonic.Payment.PaymentActivity;
 import com.rehman.clicksonic.R;
 import com.rehman.clicksonic.Utils.LoadingBar;
 
+import java.util.Objects;
 
 
 public class HomeFragment extends Fragment implements View.OnClickListener{
@@ -73,6 +80,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     String userUID,fullName,email,password,loginWith;
     int coins,points,bonus,wallet;
     LoadingBar loadingBar;
+    ReviewManager manager;
     private AppUpdateManager appUpdateManager;
     AdView adView;
     private InterstitialAd mInterstitialAd;
@@ -105,6 +113,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         clickLisnters(view);
         checkAppUpdate(view);
         ShowAds(view);
+
+
+        rate_card.setOnClickListener(v -> {
+            inAppRateUs();
+        });
+
+        invite_card.setOnClickListener(v -> {
+            final String appPackageName = getActivity().getPackageName(); // getPackageName() from Context or Activity object
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+            } catch (android.content.ActivityNotFoundException anfe) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+            }
+        });
 
         ll_scratch.setOnClickListener(v -> {
 
@@ -294,6 +316,30 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 break;
         }
 
+    }
+
+    private void inAppRateUs()
+    {
+        manager = ReviewManagerFactory.create(requireActivity());
+
+        Task<ReviewInfo> request = manager.requestReviewFlow();
+        request.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                // We can get the ReviewInfo object
+                ReviewInfo reviewInfo = task.getResult();
+                startActivitys(getActivity(),reviewInfo);
+            }
+        });
+    }
+
+    private void startActivitys(FragmentActivity activity, ReviewInfo reviewInfo)
+    {
+        Task<Void> flow = manager.launchReviewFlow((Activity) activity, reviewInfo);
+        flow.addOnCompleteListener(task -> {
+            // The flow has finished. The API does not indicate whether the user
+            // reviewed or not, or even whether the review dialog was shown. Thus, no
+            // matter the result, we continue our app flow.
+        });
     }
 
     private void initViews(View view)
