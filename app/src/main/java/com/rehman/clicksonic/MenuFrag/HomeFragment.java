@@ -219,7 +219,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             intent.putExtra("followers","10");
             intent.putExtra("likes","1");
-            intent.putExtra("views","0.005");
+            intent.putExtra("views","0.05");
 
             intent.putExtra("maxFollow","10000");
             intent.putExtra("minFollow","500");
@@ -261,11 +261,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             intent.putExtra("image",R.drawable.ic_youtube);
             startActivity(intent);
-            if (mInterstitialAd != null) {
-                mInterstitialAd.show(getActivity());
-            } else {
-                Log.d("TAG", "The interstitial ad wasn't ready yet.");
-            }
+//            if (mInterstitialAd != null) {
+//                mInterstitialAd.show(getActivity());
+//            } else {
+//                Log.d("TAG", "The interstitial ad wasn't ready yet.");
+//            }
 
         });
 

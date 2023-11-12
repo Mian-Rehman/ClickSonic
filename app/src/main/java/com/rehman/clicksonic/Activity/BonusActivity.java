@@ -90,11 +90,11 @@ public class BonusActivity extends AppCompatActivity {
         });
         card_scratch.setOnClickListener(v -> {
             showConfirmationDialog();
-            if (mInterstitialAd != null) {
-                mInterstitialAd.show(BonusActivity.this);
-            } else {
-                Log.d("TAG", "The interstitial ad wasn't ready yet.");
-            }
+//            if (mInterstitialAd != null) {
+//                mInterstitialAd.show(BonusActivity.this);
+//            } else {
+//                Log.d("TAG", "The interstitial ad wasn't ready yet.");
+//            }
         });
     }
 
@@ -142,7 +142,9 @@ public class BonusActivity extends AppCompatActivity {
                             price = document.getString("price");
 
 
-                            if (expire != null && expire.equals(dateTime.getCurrentDate())){
+                            date = dateTime.getCurrentDate();
+
+                            if (expire.compareTo(date) < 0 || expire.compareTo(date) == 0) {
                                 card_scratch.setVisibility(View.GONE);
                             }
 

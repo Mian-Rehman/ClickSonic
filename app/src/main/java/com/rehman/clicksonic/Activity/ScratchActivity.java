@@ -46,6 +46,7 @@ import com.rehman.clicksonic.Utils.LoadingBar;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ScratchActivity extends AppCompatActivity {
 
@@ -98,11 +99,11 @@ public class ScratchActivity extends AppCompatActivity {
         });
         card_scratch.setOnClickListener(v -> {
             showConfirmationDialog();
-            if (mInterstitialAd != null) {
-                mInterstitialAd.show(ScratchActivity.this);
-            } else {
-                Log.d("TAG", "The interstitial ad wasn't ready yet.");
-            }
+//            if (mInterstitialAd != null) {
+//                mInterstitialAd.show(ScratchActivity.this);
+//            } else {
+//                Log.d("TAG", "The interstitial ad wasn't ready yet.");
+//            }
         });
 
     }
@@ -150,12 +151,15 @@ public class ScratchActivity extends AppCompatActivity {
                             price = document.getString("price");
 
 
-                            if (expire != null && expire.equals(dateTime.getCurrentDate())){
+
+                            date = dateTime.getCurrentDate();
+
+                            if (expire.compareTo(date) < 0 || expire.compareTo(date) == 0) {
                                 card_scratch.setVisibility(View.GONE);
                             }
 
                             assert price != null;
-                            amount= Integer.parseInt(price);
+                            amount = Integer.parseInt(price);
 
 
                             Glide.with(ScratchActivity.this).load(imageUrl).into(img_offer);
@@ -173,6 +177,7 @@ public class ScratchActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private void showConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirm Action");
@@ -206,28 +211,28 @@ public class ScratchActivity extends AppCompatActivity {
         Intent intent = new Intent(ScratchActivity.this, PaymentActivity.class);
         startActivity(intent);
     }
-    private void userData()
-    {
+
+    private void userData() {
         FirebaseFirestore.getInstance().collection("users")
                 .document(userUID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             DocumentSnapshot snapshot = task.getResult();
-                            if (snapshot.exists()){
+                            if (snapshot.exists()) {
                                 wallet = snapshot.getLong("wallet").intValue();
 
-                                if ( amount <= wallet){
+                                if (amount <= wallet) {
                                     double newAmount = wallet - amount;
                                     updateValur(newAmount);
-                                }else {
+                                } else {
                                     Toast.makeText(ScratchActivity.this, "insufficient Balance", Toast.LENGTH_SHORT).show();
                                 }
                                 loadingBar.HideDialog();
                             }
 
-                        }else{
+                        } else {
                             loadingBar.HideDialog();
                         }
 
@@ -258,6 +263,7 @@ public class ScratchActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private void saveData() {
         FirebaseUser user = mAuth.getCurrentUser();
         assert user != null;
@@ -291,7 +297,7 @@ public class ScratchActivity extends AppCompatActivity {
 
     }
 
-        private void InitView() {
+    private void InitView() {
 
         //textView
         tv_offerName = findViewById(R.id.tv_offerName);
