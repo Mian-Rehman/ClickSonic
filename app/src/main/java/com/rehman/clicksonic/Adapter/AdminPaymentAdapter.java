@@ -144,6 +144,27 @@ public class AdminPaymentAdapter extends RecyclerView.Adapter<AdminPaymentAdapte
 
 
             int money;
+            Map<String, Object> map = new HashMap<>();
+            map.put("Status","approved");
+            FirebaseFirestore.getInstance().collection("OnlinePayment")
+                    .document(model.getOrderID())
+                    .update(map)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            model.setStatus("approved");
+
+                            notifyItemChanged(clickedPosition); // Notify the adapter of the data change
+                            Toast.makeText(context, "Status updated to approved", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(context, "Failed to update status", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
 
 
         });
@@ -199,11 +220,9 @@ public class AdminPaymentAdapter extends RecyclerView.Adapter<AdminPaymentAdapte
                     if (documentSnapshot.exists()) {
                         String status = documentSnapshot.getString("order");
                         if (status != null && status.equals("completed")) {
-                            Toast.makeText(context, ""+status, Toast.LENGTH_SHORT).show();
                             listener.onPaymentStatusFetched(true);
                         } else {
                             listener.onPaymentStatusFetched(false);
-                            Toast.makeText(context, ""+status, Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         listener.onPaymentStatusFetchFailed();
