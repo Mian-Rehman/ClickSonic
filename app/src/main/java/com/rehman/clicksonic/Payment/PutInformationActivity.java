@@ -84,6 +84,7 @@ public class PutInformationActivity extends AppCompatActivity {
         map.put("senderNumber", senderNumber);
         map.put("amountTransferred", amount);
         map.put("paymentMethod", title);
+        map.put("order", "Uncompleted");
         map.put("OrderID", id);
         map.put("userUID", userUID);
         map.put("Status", "pending");

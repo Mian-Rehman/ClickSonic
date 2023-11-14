@@ -23,6 +23,12 @@
         android:theme="@style/Theme.ClickSonic"
         tools:targetApi="31">
         <activity
+            android:name=".Lists.CoinBoughtListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Lists.BoughtListActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.BonusActivity"
             android:exported="false" />
         <activity

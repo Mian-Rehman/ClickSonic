@@ -16,7 +16,8 @@ import com.rehman.clicksonic.R;
 
 public class BuyCoinActivity extends AppCompatActivity {
 
-    LinearLayout buy_coins_layout,buy_points_layout;
+//    ,buy_points_layout
+    LinearLayout buy_coins_layout;
     TextView buy_coins_text,buy_points_text;
     View buy_coins_view,buy_points_view;
     ImageView back_image;
@@ -96,7 +97,7 @@ public class BuyCoinActivity extends AppCompatActivity {
         buy_coins_text = findViewById(R.id.buy_coins_text);
         buy_coins_view = findViewById(R.id.buy_coins_view);
 
-        buy_points_layout = findViewById(R.id.buy_points_layout);
+//        buy_points_layout = findViewById(R.id.buy_points_layout);
         buy_points_text = findViewById(R.id.buy_points_text);
         buy_points_view = findViewById(R.id.buy_points_view);
         back_image = findViewById(R.id.back_image);

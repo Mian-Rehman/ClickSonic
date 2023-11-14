@@ -2,10 +2,13 @@ package com.rehman.clicksonic.Model;
 
 public class PaymentModel {
 
-    String OrderDate,OrderID,OrderTime,Status,verifyTID,userUID,senderNumber,paymentMethod,amountTransferred;
+    String OrderDate,OrderID,OrderTime,Status,verifyTID,userUID,senderNumber,paymentMethod,amountTransferred,
+            order;
+
+
 
     public PaymentModel(String orderDate, String orderID, String orderTime, String status, String verifyTID,
-                        String userUID, String senderNumber, String paymentMethod, String amountTransferred) {
+                        String userUID, String senderNumber, String paymentMethod, String amountTransferred, String order) {
         this.OrderDate = orderDate;
         this.OrderID = orderID;
         this.OrderTime = orderTime;
@@ -15,8 +18,16 @@ public class PaymentModel {
         this.senderNumber = senderNumber;
         this.paymentMethod = paymentMethod;
         this.amountTransferred = amountTransferred;
+        this.order = order;
     }
     public PaymentModel() {
+    }
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
     }
 
     public String getOrderDate() {

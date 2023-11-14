@@ -40,7 +40,6 @@ public class TikTokActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tik_tok);
         mAuth = FirebaseAuth.getInstance();
-        userUID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
         intiView();
         getYouTubeList();
@@ -65,7 +64,6 @@ public class TikTokActivity extends AppCompatActivity {
 
         FirebaseFirestore.getInstance().collection("TikTok")
                 .whereEqualTo("Status","rejected")
-                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -99,7 +97,6 @@ public class TikTokActivity extends AppCompatActivity {
 
         FirebaseFirestore.getInstance().collection("TikTok")
                 .whereEqualTo("Status","approved")
-                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -133,7 +130,6 @@ public class TikTokActivity extends AppCompatActivity {
 
         FirebaseFirestore.getInstance().collection("TikTok")
                 .whereEqualTo("Status","pending")
-                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

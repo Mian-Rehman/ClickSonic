@@ -22,6 +22,7 @@
             >
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_100"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -48,7 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="100 Coins"                            android:textAlignment="center"
+                        android:text="500 Coins"                            android:textAlignment="center"
                         android:textColor="@color/main_color"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -57,7 +58,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="PKR 250"
+                        android:text="PKR 100"
                         android:background="@color/golden"
                         android:textAlignment="center"
                         android:textColor="@color/white"
@@ -69,6 +70,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_150"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -95,7 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="150 Coins"                            android:textAlignment="center"
+                        android:text="1800 Coins"                            android:textAlignment="center"
                         android:textColor="@color/main_color"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -104,7 +106,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="PKR 350"
+                        android:text="PKR 300"
                         android:background="@color/golden"
                         android:textAlignment="center"
                         android:textColor="@color/white"
@@ -126,6 +128,7 @@
             >
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_500"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -152,7 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="500 Coins"                            android:textAlignment="center"
+                        android:text="3000 Coins"                            android:textAlignment="center"
                         android:textColor="@color/main_color"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -161,7 +164,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="PKR 650"
+                        android:text="PKR 500"
                         android:background="@color/golden"
                         android:textAlignment="center"
                         android:textColor="@color/white"
@@ -173,6 +176,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_800"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -199,7 +203,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="800 Coins"                            android:textAlignment="center"
+                        android:text="6500 Coins"                            android:textAlignment="center"
                         android:textColor="@color/main_color"
                         android:textSize="14sp"
                         android:textStyle="bold" />

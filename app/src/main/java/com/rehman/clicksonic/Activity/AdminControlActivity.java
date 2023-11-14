@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.rehman.clicksonic.Lists.AdminPaymentViewlistActivity;
+import com.rehman.clicksonic.Lists.BoughtListActivity;
+import com.rehman.clicksonic.Lists.CoinBoughtListActivity;
 import com.rehman.clicksonic.Lists.FacebookListActivity;
 import com.rehman.clicksonic.Lists.InstagramListActivity;
 import com.rehman.clicksonic.Lists.TikTokActivity;
@@ -18,7 +20,7 @@ import com.rehman.clicksonic.SubActivity.MakeScratchActivity;
 
 public class AdminControlActivity extends AppCompatActivity {
     CardView card_user,card_youTube,card_instagram,card_facebook,card_tiktok,card_bonus,
-            card_scratch,money_card;
+            card_scratch,money_card,card_bought,card_coin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,8 @@ public class AdminControlActivity extends AppCompatActivity {
         card_scratch.setOnClickListener(v -> {startActivity(new Intent(AdminControlActivity.this, MakeScratchActivity.class));});
         money_card.setOnClickListener(v -> {startActivity(new Intent(AdminControlActivity.this, AdminPaymentViewlistActivity.class));});
         card_bonus.setOnClickListener(v -> {startActivity(new Intent(AdminControlActivity.this, MakeBonusActivity.class));});
+        card_bought.setOnClickListener(v -> {startActivity(new Intent(AdminControlActivity.this, BoughtListActivity.class));});
+        card_coin.setOnClickListener(v -> {startActivity(new Intent(AdminControlActivity.this, CoinBoughtListActivity.class));});
 
     }
 
@@ -53,6 +57,8 @@ public class AdminControlActivity extends AppCompatActivity {
         card_scratch =findViewById(R.id.card_scratch);
         card_bonus =findViewById(R.id.card_bonus);
         money_card =findViewById(R.id.money_card);
+        card_bought =findViewById(R.id.card_bought);
+        card_coin =findViewById(R.id.card_coin);
 
     }
 }

@@ -88,47 +88,64 @@ public class AdminPaymentAdapter extends RecyclerView.Adapter<AdminPaymentAdapte
         holder.card_approvedAdp.setOnClickListener(v -> {
             int clickedPosition = holder.getAdapterPosition();
 
-            // Call a function to fetch the user's wallet amount
-            fetchUserWalletAmount(model.getUserUID(), new OnWalletAmountFetchedListener() {
-                @Override
-                public void onWalletAmountFetched(int walletAmount) {
-                    // Update the user's wallet based on your business logic
-                    int newWalletAmount = walletAmount + Integer.parseInt(model.getAmountTransferred());
+                isValid(model.getOrderID(), new OnPaymentStatusFetchedListener() {
+                    @Override
+                    public void onPaymentStatusFetched(boolean isApproved) {
+                        if (!isApproved) {
+                            fetchUserWalletAmount(model.getUserUID(), new OnWalletAmountFetchedListener() {
+                                @Override
+                                public void onWalletAmountFetched(int walletAmount) {
 
-                    // Update the Firestore document for the user's wallet
-                    updateWalletAmount(model.getUserUID(), newWalletAmount);
-                    Toast.makeText(context, "Wallet has been updated", Toast.LENGTH_SHORT).show();
-                }
+                                    int newWalletAmount = walletAmount + Integer.parseInt(model.getAmountTransferred());
 
-                @Override
-                public void onWalletAmountFetchFailed() {
-                    Toast.makeText(context, "Failed to fetch user's wallet amount", Toast.LENGTH_SHORT).show();
-                }
-            });
+                                    updateWalletAmount(model.getUserUID(), newWalletAmount);
+                                    Toast.makeText(context, "Wallet has been updated", Toast.LENGTH_SHORT).show();
+
+                                    Map<String, Object> map = new HashMap<>();
+                                    map.put("Status","approved");
+                                    map.put("order","completed");
+                                    FirebaseFirestore.getInstance().collection("OnlinePayment")
+                                            .document(model.getOrderID())
+                                            .update(map)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    model.setStatus("approved");
+                                                    model.setOrder("completed");
+
+                                                    notifyItemChanged(clickedPosition); // Notify the adapter of the data change
+                                                    Toast.makeText(context, "Status updated to approved", Toast.LENGTH_SHORT).show();
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(context, "Failed to update status", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+
+                                }
+
+                                @Override
+                                public void onWalletAmountFetchFailed() {
+                                    Toast.makeText(context, "Failed to fetch user's wallet amount", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(context, "Payment was already Approved", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onPaymentStatusFetchFailed() {
+                        Toast.makeText(context, "Failed to fetch payment status", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
             int money;
 
-            Map<String, Object> map = new HashMap<>();
-            map.put("Status","approved");
-            FirebaseFirestore.getInstance().collection("OnlinePayment")
-                    .document(model.getOrderID())
-                    .update(map)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            // Data updated successfully in Firestore
-                            // You can also update the local data if needed
-                            model.setStatus("approved");
-                            notifyItemChanged(clickedPosition); // Notify the adapter of the data change
-                            Toast.makeText(context, "Status updated to approved", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // Handle any errors that occurred during the update
-                            Toast.makeText(context, "Failed to update status", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+
         });
 
         holder.card_rejectedAdp.setOnClickListener(v -> {
@@ -173,7 +190,36 @@ public class AdminPaymentAdapter extends RecyclerView.Adapter<AdminPaymentAdapte
                     listener.onWalletAmountFetchFailed();
                 });
     }
-    // Function to update the user's wallet amount
+
+    private void isValid(String orderId, OnPaymentStatusFetchedListener listener) {
+        FirebaseFirestore.getInstance().collection("OnlinePayment")
+                .document(orderId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String status = documentSnapshot.getString("order");
+                        if (status != null && status.equals("completed")) {
+                            Toast.makeText(context, ""+status, Toast.LENGTH_SHORT).show();
+                            listener.onPaymentStatusFetched(true);
+                        } else {
+                            listener.onPaymentStatusFetched(false);
+                            Toast.makeText(context, ""+status, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        listener.onPaymentStatusFetchFailed();
+                        Toast.makeText(context, "Document not fetched", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    listener.onPaymentStatusFetchFailed();
+                    Toast.makeText(context, "Error: Try again", Toast.LENGTH_SHORT).show();
+                });
+    }
+    interface OnPaymentStatusFetchedListener {
+        void onPaymentStatusFetched(boolean isApproved);
+
+        void onPaymentStatusFetchFailed();
+    }
     private void updateWalletAmount(String userId, int newWalletAmount) {
         Map<String, Object> walletUpdate = new HashMap<>();
         walletUpdate.put("wallet", newWalletAmount);
