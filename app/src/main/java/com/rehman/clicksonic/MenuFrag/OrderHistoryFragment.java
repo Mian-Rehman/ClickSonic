@@ -18,6 +18,8 @@ import com.rehman.clicksonic.Lists.YouTubeListActivity;
 import com.rehman.clicksonic.R;
 import com.rehman.clicksonic.SubActivity.UserList.UserFacebookListActivity;
 import com.rehman.clicksonic.SubActivity.UserList.UserInstagramListActivity;
+import com.rehman.clicksonic.SubActivity.UserList.UserTikTokListActivity;
+import com.rehman.clicksonic.SubActivity.UserList.UserYoutTubeListActivity;
 
 public class OrderHistoryFragment extends Fragment {
 
@@ -33,7 +35,7 @@ public class OrderHistoryFragment extends Fragment {
         initView(view);
 
         card_youTube.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), YouTubeListActivity.class);
+            Intent intent = new Intent(getActivity(), UserYoutTubeListActivity.class);
             intent.putExtra("type","user");
             startActivity(intent);
         });
@@ -48,7 +50,7 @@ public class OrderHistoryFragment extends Fragment {
             startActivity(intent);
         });
         card_tiktok.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), TikTokActivity.class);
+            Intent intent = new Intent(getActivity(), UserTikTokListActivity.class);
             intent.putExtra("type","user");
             startActivity(intent);
         });

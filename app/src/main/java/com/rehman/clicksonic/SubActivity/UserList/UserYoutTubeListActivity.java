@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,11 +34,17 @@ public class UserYoutTubeListActivity extends AppCompatActivity {
     UserYouTubeAdapter adapter;
     ArrayList<YouTubeModel> mDataList = new ArrayList<>();
     FirebaseAuth mAuth;
+    FirebaseUser mUser;
+    String userUID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_yout_tube_list);
+
         mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        assert mUser != null;
+        userUID = mUser.getUid();
 
         intiView();
         getYouTubeList();
@@ -62,6 +69,7 @@ public class UserYoutTubeListActivity extends AppCompatActivity {
 
         FirebaseFirestore.getInstance().collection("YouTube")
                 .whereEqualTo("Status","rejected")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -95,6 +103,7 @@ public class UserYoutTubeListActivity extends AppCompatActivity {
 
         FirebaseFirestore.getInstance().collection("YouTube")
                 .whereEqualTo("Status","approved")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -128,6 +137,7 @@ public class UserYoutTubeListActivity extends AppCompatActivity {
 
         FirebaseFirestore.getInstance().collection("YouTube")
                 .whereEqualTo("Status","pending")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -160,6 +170,7 @@ public class UserYoutTubeListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         FirebaseFirestore.getInstance().collection("YouTube")
+                .whereEqualTo("userUID",userUID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
